@@ -47,3 +47,14 @@ body {
   color: #FB8C00;
   outline: 0;
 }
+
+.charge_conts_box .form_box {overflow:hidden; background:#8b91ab; border-radius:20px;}
+.charge_conts_box .form_box li {list-style:none; position:relative; overflow:hidden;}
+.charge_conts_box .form_box li:before {content:""; background:rgba(0,0,0,0.15); height:1px; width:100%; position:absolute; left:0; top:0;}
+.charge_conts_box .form_box li:first-of-type:before {display:none;}
+.charge_conts_box .form_box .opt {position:absolute; left:30px; top:50%; margin-top:-12px;}
+.charge_conts_box .form_box .opt_txt {background:transparent url('../images/charge/opt_ic.png') 0 1px no-repeat; padding:3px 0 3px 30px; color:#fff; font-size:17px; font-weight:300; }
+.charge_conts_box .form_box .ess .opt_txt {background:transparent url('../images/charge/opt_ic_ess.png') 0 1px no-repeat;}
+.charge_conts_box .form_box .opt_txt strong {display:block; color:#c5c8d5; font-weight:inherit; font-size:15px;}
+.charge_conts_box .form_box .if_line2 .opt {margin-top:-20px}
+.charge_conts_box .form_box .value {background:#fff; padding:15px; margin-left:210px; border-left:1px solid rgba(0,0,0,0.01); overflow:hidden; }
