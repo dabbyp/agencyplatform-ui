@@ -4,13 +4,13 @@
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-logomodern-business-nav/blob/master/LICENSE)
  */
 body {
-  padding-top: 56px;
+  padding-top: 0px;
   font-family:"NanumBarunGothic",sans-serif; font-size:12px; font-weight:400; -webkit-text-size-adjust:none;
 }
 
 .carousel-item {
-  height: 65vh;
-  min-height: 300px;
+  height: 50vh;
+  min-height: 200px;
   background: no-repeat center center scroll;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -20,4 +20,30 @@ body {
 
 .portfolio-item {
   margin-bottom: 30px;
+}
+
+/* Rules for sizing the icon. */
+.material-icons.md-18 { font-size: 18px; }
+.material-icons.md-24 { font-size: 24px; }
+.material-icons.md-36 { font-size: 36px; }
+.material-icons.md-48 { font-size: 48px; }
+
+/* Rules for using icons as black on a light background. */
+.material-icons.md-dark { color: rgba(0, 0, 0, 0.54); }
+.material-icons.md-dark.md-inactive { color: rgba(0, 0, 0, 0.26); }
+
+/* Rules for using icons as white on a dark background. */
+.material-icons.md-light { color: rgba(255, 255, 255, 1); }
+.material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
+
+.material-icons.orange600 { color: #FB8C00; }
+
+.material-icons:hover, .material-icons:focus {
+  color: #FB8C00;
+  outline: 0;
+}
+
+.btn:hover, .btn:focus {
+  color: #FB8C00;
+  outline: 0;
 }
