@@ -14,13 +14,23 @@
   <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
   <!-- Custom styles for this template -->
-  <link href="../css/modern-business.css" rel="stylesheet">
+  <script src="../vendor/jquery/jquery.min.js"></script>
+  <script src="../js/autoNumeric.js" type="text/javascript"></script>
   <script src="../js/calculator.js" type="text/javascript"></script>
+  <script src="../js/calculator_apply.js" type="text/javascript"></script>
+  <script src="../js/calculator_common.js" type="text/javascript"></script>
+  <link href="../css/modern-business.css" rel="stylesheet">
 
 </head>
 
 <body>
+  <script>
+    //최초 페이지 로딩 시 JQuery 함수 호출
+    $(function(){
+        changeDeungGi();changeRealType();
+    });
 
+  </script>
   <!-- Page Content -->
   <div class="container">
     <p></p>
@@ -45,14 +55,16 @@
             </div>
             <div class="col-8">
               <select id="deungGi" class="form-control form-control-sm" onchange="javascript:changeDeungGi();">
-                <option value="DG001">소유권이전</option>
+                <option value="DG001" selected>소유권이전</option>
                 <option value="DG002">전세권설정</option>
                 <option value="DG003">근저당권설정</option>
                 <option value="DG004">증여등기</option>
                 <option value="DG005">상속등기</option>
               </select>
             </div>
-            <div class="w-100" ><h3></h3></div>
+
+            <div class="w-100"><h3></h3></div>
+
             <div class="col" id="realTypeTitle">부동산종류</div>
             <div class="col-8">
               <select id="realType" class="form-control form-control-sm" onchange="javascript:changeRealType();">
@@ -63,40 +75,113 @@
                 <option value="RT005">농지외</option>
               </select>
             </div>
-            <div class="w-100" ><h3></h3></div>
-            <div class="col"><span id="priceSpan">거래금액</span></div>
+
+            <div class="w-100"><h3></h3></div>
+
+            <div class="col"><span id="moneySpan">거래금액</span></div>
             <div class="col-8">
-              <input type="tel" id="price" class="form-control" placeholder="예) 100,000,000" data-v-max="99999999999" data-v-min="0" data-a-sign="원" data-p-sign="s" onchange="valueCheck(this.value)">
-              <input type="text" id="priceText" style="color:6C7B8B; border:0; display:none;" readonly="true" />
+              <input type="tel" id="money" class="form-control" placeholder="예) 100,000,000" data-v-max="99999999999" data-v-min="0" data-a-sign="원" data-p-sign="s" onchange="moneyCheck();">
             </div>
             <div class="w-100" ><h3></h3></div>
-            <div class="col">감면조항</div>
+            <div class="col"></div>
             <div class="col-8">
+              &nbsp;&nbsp;&nbsp;&nbsp;
+              <input type="text" id="moneyText" style="color:gray; border:0; display:none;" readonly="true" />
+            </div>
+
+            <div class="w-100"><h3></h3></div>
+
+            <div class="col" id="del_cond_title">감면조항</div>
+            <div class="col-8" id="del_cond_content">
               <div class="custom-control custom-radio">
-                <input type="radio" id="customRadio1" name="customRadio1" class="custom-control-input" checked>
+                <input type="radio" id="customRadio1" name="del_cond" class="custom-control-input" value="false" checked>
                 <label class="custom-control-label" for="customRadio1">전용면적 85제곱미터 이하</label>
               </div>
               <div class="custom-control custom-radio">
-                <input type="radio" id="customRadio2" name="customRadio1" class="custom-control-input">
+                <input type="radio" id="customRadio2" name="del_cond" class="custom-control-input" value="true">
                 <label class="custom-control-label" for="customRadio2">전용면적 85제곱미터 초과</label>
               </div>
             </div>
-            <div class="w-100" ><h3></h3></div>
-            <div class="col">보유주택수</div>
-            <div class="col-8">
+
+            <div class="w-100"><h3></h3></div>
+
+            <div class="col" id="own_house_title">보유주택수</div>
+            <div class="col-8" id="own_house_content">
               <div class="custom-control custom-radio">
-                <input type="radio" id="customRadio3" name="customRadio2" class="custom-control-input" checked>
+                <input type="radio" id="customRadio3" name="own_house" class="custom-control-input" value="false" checked>
                 <label class="custom-control-label" for="customRadio3">4주택 미만</label>
               </div>
               <div class="custom-control custom-radio">
-                <input type="radio" id="customRadio4" name="customRadio2" class="custom-control-input">
+                <input type="radio" id="customRadio4" name="own_house" class="custom-control-input" value="true">
                 <label class="custom-control-label" for="customRadio4">4주택 이상</label>
               </div>
             </div>
+
+            <div class="w-100"><h3></h3></div>
+
+            <div class="col" id="del_cond2_title">무주택자감면<br><font size="1" color="gray">(세대원포함)</font></div>
+            <div class="col-8" id="del_cond2_content">
+              <div class="custom-control custom-radio">
+                <input type="radio" id="customRadio5" name="del_cond2" class="custom-control-input" value="1">
+                <label class="custom-control-label" for="customRadio5">무주택</label>
+              </div>
+              <div class="custom-control custom-radio">
+                <input type="radio" id="customRadio6" name="del_cond2" class="custom-control-input" value="2" checked>
+                <label class="custom-control-label" for="customRadio6">1주택 이상</label>
+              </div>
+            </div>
+
+            <div class="w-100"><h3></h3></div>
+
+            <div class="col" id="bond_max_title">채권최고액</div>
+            <div class="col-8" id="bond_max_content">
+              <select class="form-control form-control-sm" id="bond_max">
+                <option value="100">100%</option>
+                <option value="110">110%</option>
+                <option value="120">120%</option>
+                <option value="130">130%</option>
+                <option value="140">140%</option>
+                <option value="150">150%</option>
+              </select>
+            </div>
+
+            <div class="w-100"><h3></h3></div>
+
+            <div class="col" id="square_title">필지수</div>
+            <div class="col-8" id="square_content">
+              <select class="form-control form-control-sm" id="square">
+                <option value="1">1필지</option>
+                <option value="2">2필지</option>
+                <option value="3">3필지</option>
+                <option value="4">4필지</option>
+                <option value="5">5필지</option>
+                <option value="6">6필지</option>
+                <option value="7">7필지</option>
+                <option value="8">8필지</option>
+                <option value="9">9필지</option>
+                <option value="10">10필지</option>
+              </select>
+            </div>
+
+            <div class="w-100"><h3></h3></div>
+
+            <div class="col" id="del_cond3_title">감면조항</div>
+            <div class="col-8" id="del_cond3_content">
+              <div class="custom-control custom-radio">
+                <input type="radio" id="customRadio7" name="del_cond3" class="custom-control-input" value="2" checked>
+                <label class="custom-control-label" for="customRadio7">농지원부2년이상보유</label>
+              </div>
+              <div class="custom-control custom-radio">
+                <input type="radio" id="customRadio8" name="del_cond3" class="custom-control-input" value="1">
+                <label class="custom-control-label" for="customRadio8">감면사항없음</label>
+              </div>
+            </div>
+
+
           </div>
           <p></p>
           <div class="text-center">
-            <button type="button" class="btn btn-primary">비용 계산하기</button>
+            <button type="button" class="btn btn-primary" onclick="javascript:doCalculate();">비용 계산</button>
           </div>
           <p></p>
         </div>
@@ -104,107 +189,23 @@
       <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
       <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
     </div>
-    <!-- 계산결과 -->
-    <div class="result_box" id="showCalculate" style="display:none;">
-      <table class="first_table" id="show_paper">
-        <!-- <colgroup>
-            <col width="25%"/>
-            <col width="*"/>
-            <col width="25%"/>
-        </colgroup>
-        <thead>
-            <tr>
-                <th scope="col">항목</th>
-                <th scope="col">금액</th>
-                <th scope="col">비고</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td class="opt">취득세</td>
-                <td class="price"> -->
-        <!-- 기호이미지 더하기:if_plus, 빼기:iif_minus, 곱하기:if_multi, 합계:if_equal -->
-        <!-- <span class="mark if_plus"></span>
-        <span class="lineup">
-            <span class="number">876,000</span>
-            <span class="unit">원</span>
-        </span>
-    </td>
-    <td class="add_txt"></td>
-</tr>
-<tr>
-    <td class="opt">지방교육세</td>
-    <td class="price">
-        <span class="mark if_plus"></span>
-        <span class="lineup">
-            <span class="number">76,000</span>
-            <span class="unit">원</span>
-        </span>
-    </td>
-    <td class="add_txt"></td>
-</tr>
-<tr>
-    <td class="opt">농어촌특별세</td>
-    <td class="price">
-        <span class="mark if_plus"></span>
-        <span class="lineup">
-            <span class="number">336,000</span>
-            <span class="unit">원</span>
-        </span>
-    </td>
-    <td class="add_txt"></td>
-</tr>
-<tr>
-    <td class="opt">증지대</td>
-    <td class="price">
-        <span class="mark if_plus"></span>
-        <span class="lineup">
-            <span class="number">336,000</span>
-            <span class="unit">원</span>
-        </span>
-    </td>
-    <td class="add_txt"></td>
-</tr>
-<tr>
-    <td class="opt">국민주택채권</td>
-    <td class="price">
-        <span class="mark if_multi"></span>
-        <span class="lineup">
-            <span class="number">1.99568</span>
-            <span class="unit">%</span>
-        </span>
-    </td>
-    <td class="add_txt">잔금지급일 별도청구</td>
-</tr>
-<tr>
-    <td class="opt">법정수수료</td>
-    <td class="price">
-        <span class="mark if_plus"></span>
-        <span class="lineup">
-            <span class="number">5,001</span>
-            <span class="unit">원</span>
-        </span>
-    </td>
-    <td class="add_txt"></td>
-</tr>
-</tbody>
-<tfoot>
-<tr>
-    <td class="opt">합계</td>
-    <td class="price">
-        <span class="mark if_equal"></span>
-        <span class="lineup">
-            <span class="number">1,875,000</span>
-            <span class="unit">원</span>
-        </span>
-    </td>
-    <td class="add_txt"></td>
-</tr>
-</tfoot> -->
-      </table>
-      <div class="exeplain_txt">※ 위 금액은 참고사항이며 법률사무소별로 제비용, 교통비, 등록대행비 등이 추가될 수 있습니다.</div>
+    <!-- 계산결과 테이블 -->
+    <div class="result_box" id="resultTable" style="display:none;">
+      <table class="table table-striped" id="result_contents"></table>
+      <div class="exeplain_txt">※ 법률사무소의 경비 및 등록대행비 등은 고려되지 않았음.</div>
     </div>
-    <!-- / 계산결과 -->
+    <!-- / 계산결과 테이블 -->
+
+    <!-- 계산버튼 -->
+    <div class="bottom_btn" id="requestButton" style="display:none;">
+      <p></p>
+      <div class="text-center">
+        <button type="button" class="btn btn-primary">견적 의뢰</button>
+      </div>
+      <p></p>
+    </div>
+    <!-- / 계산버튼 -->
+
   </div>
   <!-- /.container -->
 
@@ -217,481 +218,8 @@
   </footer>
 
   <!-- Bootstrap core JavaScript -->
-  <script src="../vendor/jquery/jquery.min.js"></script>
   <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-  <script>
-  function changeDeungGi(){
-    var deungGi = $("#deungGi").val();
-
-    if(deungGi == "DG001"){
-      var realTypeHtml = new Array();
-      realTypeHtml.push("<option value='RT001'>아파트</option>");
-      realTypeHtml.push("<option value='RT002'>주택(단독주택, 다가구주택 등)</option>");
-      realTypeHtml.push("<option value='RT003'>상가(점포,사무실,오피스텔)</option>");
-      realTypeHtml.push("<option value='RT004'>농지</option>");
-      realTypeHtml.push("<option value='RT005'>농지외</option>");
-
-      $("#realType").html(realTypeHtml.join(""));
-      $("#priceSpan").text("거래금액");
-    }
-
-    if(deungGi == "DG002"){
-      var realTypeHtml = new Array();
-      realTypeHtml.push("<option value='RT001'>아파트, 주택, 상가</option>");
-
-      $("#realType").html(realTypeHtml.join(""));
-
-      $("#priceSpan").text("전세보증금");
-<!--      $("#realPrice_dd").hide();-->
-
-<!--      $("#bond_dd").hide();-->
-<!--      $("#taxReduceYn_dd").hide();-->
-<!--      $("#landNumber_dd").hide();-->
-<!--      $("#taxReduceYn2_dd").hide();-->
-<!--      $("#noHouse_dd").hide();-->
-<!--      $("#taxOverFour_dd").hide();-->
-    }
-
-    if(deungGi == "DG003"){
-      var realTypeHtml = new Array();
-      realTypeHtml.push("<option value='RT001'>아파트</option>");
-      realTypeHtml.push("<option value='RT002'>주택(단독주택, 다가구주택 등)</option>");
-      realTypeHtml.push("<option value='RT003'>상가(점포,사무실,오피스텔)</option>");
-      realTypeHtml.push("<option value='RT004'>농지</option>");
-      realTypeHtml.push("<option value='RT005'>농지외</option>");
-
-      $("#realType").html(realTypeHtml.join(""));
-      $("#priceSpan").text("채무금액");
-<!--      $("#realPrice_dd").hide();-->
-
-<!--      $("#bond_dd").show();-->
-<!--      $("#taxReduceYn_dd").hide();-->
-<!--      $("#landNumber_dd").hide();-->
-<!--      $("#taxReduceYn2_dd").hide();-->
-<!--      $("#noHouse_dd").hide();-->
-<!--      $("#taxOverFour_dd").hide();-->
-    }
-
-    if(deungGi == "DG004"){
-      var realTypeHtml = new Array();
-      realTypeHtml.push("<option value='RT001'>아파트</option>");
-      realTypeHtml.push("<option value='RT002'>주택(단독주택, 다가구주택 등)</option>");
-      realTypeHtml.push("<option value='RT003'>상가(점포,사무실,오피스텔)</option>");
-      realTypeHtml.push("<option value='RT004'>농지</option>");
-      realTypeHtml.push("<option value='RT005'>농지외</option>");
-
-      $("#realType").html(realTypeHtml.join(""));
-      $("#priceSpan").text("공시지가");
-<!--      $("#realPrice").text("확인하기 (pc로 확인가능)");-->
-<!--      $("#realPrice").attr("class", "btn_md_color");-->
-<!--      $("#realPrice_dd").show();-->
-
-<!--      $("#bond_dd").hide();-->
-<!--      $("#taxReduceYn_dd").show();-->
-<!--      $("#landNumber_dd").hide();-->
-<!--      $("#taxReduceYn2_dd").hide();-->
-<!--      $("#noHouse_dd").hide();-->
-<!--      $("#taxOverFour_dd").hide();-->
-    }
-
-    if(deungGi == "DG005"){
-      var realTypeHtml = new Array();
-      realTypeHtml.push("<option value='RER001'>아파트</option>");
-      realTypeHtml.push("<option value='RER002'>주택(단독주택, 다가구주택 등)</option>");
-      realTypeHtml.push("<option value='RER003'>상가(점포,사무실,오피스텔)</option>");
-      realTypeHtml.push("<option value='RER004'>농지</option>");
-      realTypeHtml.push("<option value='RER005'>농지외</option>");
-
-      $("#realType").html(realTypeHtml.join(""));
-      $("#priceSpan").text("공시지가");
-<!--      $("#realPrice").text("확인하기 (pc로 확인가능)");-->
-<!--      $("#realPrice").attr("class", "btn_md_color");-->
-<!--      $("#realPrice_dd").show();-->
-
-<!--      $("#bond_dd").hide();-->
-<!--      $("#taxReduceYn_dd").show();-->
-<!--      $("#landNumber_dd").hide();-->
-<!--      $("#taxReduceYn2_dd").hide();-->
-<!--      $("#noHouse_dd").show();-->
-<!--      $("#taxOverFour_dd").hide();-->
-    }
-  }
-
-  function goRealType(){
-    var lawType = $("#lawType").val();
-    var realType = $("#realType").val();
-
-    if(lawType == "QRT001"){
-      if(realType == "RER001"){
-        $("#realPrice_dd").hide();
-        $("#taxReduceYn_dd").show();
-        $("#landNumber_dd").hide();
-        $("#bond_dd").hide();
-        $("#taxReduceYn2_dd").hide();
-        $("#noHouse_dd").hide();
-        $("#taxOverFour_dd").show();
-      }
-      if(realType == "RER002"){
-        $("#realPrice_dd").hide();
-        $("#taxReduceYn_dd").show();
-        $("#landNumber_dd").show();
-        $("#bond_dd").hide();
-        $("#taxReduceYn2_dd").hide();
-        $("#noHouse_dd").hide();
-        $("#taxOverFour_dd").show();
-      }
-      if(realType == "RER003"){
-        $("#realPrice_dd").hide();
-        $("#taxReduceYn_dd").hide();
-        $("#landNumber_dd").hide();
-        $("#bond_dd").hide();
-        $("#taxReduceYn2_dd").hide();
-        $("#noHouse_dd").hide();
-        $("#taxOverFour_dd").hide();
-      }
-      if(realType == "RER004"){
-        $("#realPrice_dd").hide();
-        $("#taxReduceYn_dd").hide();
-        $("#landNumber_dd").show();
-        $("#bond_dd").hide();
-        $("#taxReduceYn2_dd").show();
-        $("#noHouse_dd").hide();
-        $("#taxOverFour_dd").hide();
-      }
-      if(realType == "RER005"){
-        $("#realPrice_dd").hide();
-        $("#taxReduceYn_dd").hide();
-        $("#landNumber_dd").show();
-        $("#bond_dd").hide();
-        $("#taxReduceYn2_dd").hide();
-        $("#noHouse_dd").hide();
-        $("#taxOverFour_dd").hide();
-      }
-    }
-
-    if(lawType == "QRT003"){
-      if(realType == "RER001"){
-        $("#realPrice_dd").hide();
-        $("#bond_dd").show();
-        $("#taxReduceYn_dd").hide();
-        $("#landNumber_dd").hide();
-        $("#taxReduceYn2_dd").hide();
-        $("#noHouse_dd").hide();
-        $("#taxOverFour_dd").hide();
-      }
-      if(realType == "RER002"){
-        $("#realPrice_dd").hide();
-        $("#bond_dd").show();
-        $("#taxReduceYn_dd").hide();
-        $("#landNumber_dd").show();
-        $("#taxReduceYn2_dd").hide();
-        $("#noHouse_dd").hide();
-        $("#taxOverFour_dd").hide();
-      }
-      if(realType == "RER003"){
-        $("#realPrice_dd").hide();
-        $("#bond_dd").show();
-        $("#taxReduceYn_dd").hide();
-        $("#landNumber_dd").show();
-        $("#taxReduceYn2_dd").hide();
-        $("#noHouse_dd").hide();
-        $("#taxOverFour_dd").hide();
-      }
-      if(realType == "RER004"){
-        $("#realPrice_dd").hide();
-        $("#bond_dd").show();
-        $("#taxReduceYn_dd").hide();
-        $("#landNumber_dd").show();
-        $("#taxReduceYn2_dd").hide();
-        $("#noHouse_dd").hide();
-        $("#taxOverFour_dd").hide();
-      }
-      if(realType == "RER005"){
-        $("#realPrice_dd").hide();
-        $("#bond_dd").show();
-        $("#taxReduceYn_dd").hide();
-        $("#landNumber_dd").show();
-        $("#taxReduceYn2_dd").hide();
-        $("#noHouse_dd").hide();
-        $("#taxOverFour_dd").hide();
-      }
-    }
-
-    if(lawType == "QRT004"){
-      if(realType == "RER001"){
-        $("#realPrice").attr("href", "javascript:goExternalRealPrice('http://aao.kab.co.kr/aaofx/');");
-        $("#realPrice").text("확인하기 (pc로 확인가능)");
-        $("#realPrice").attr("class", "btn_md_color");
-        $("#realPrice_dd").show();
-        $("#bond_dd").hide();
-        $("#taxReduceYn_dd").show();
-        $("#landNumber_dd").hide();
-        $("#taxReduceYn2_dd").hide();
-        $("#noHouse_dd").hide();
-        $("#taxOverFour_dd").hide();
-      }
-      if(realType == "RER002"){
-        $("#realPrice").attr("href", "javascript:goExternalRealPrice('http://www.kais.kr/realtyprice/hpindividual/siteLink.htm');");
-        $("#realPrice").text("확인하기 (pc로 확인가능)");
-        $("#realPrice").attr("class", "btn_md_color");
-        $("#realPrice_dd").show();
-        $("#bond_dd").hide();
-        $("#taxReduceYn_dd").show();
-        $("#landNumber_dd").show();
-        $("#taxReduceYn2_dd").hide();
-        $("#noHouse_dd").hide();
-        $("#taxOverFour_dd").hide();
-      }
-      if(realType == "RER003"){
-        $("#realPrice").attr("href", "#");
-        $("#realPrice").text("부동산 소재지 시,군,구청에 문의하기");
-        $("#realPrice").attr("class", "btn_md_black");
-        $("#realPrice_dd").show();
-        $("#bond_dd").hide();
-        $("#taxReduceYn_dd").hide();
-        $("#landNumber_dd").hide();
-        $("#taxReduceYn2_dd").hide();
-        $("#noHouse_dd").hide();
-        $("#taxOverFour_dd").hide();
-      }
-      if(realType == "RER004"){
-        $("#realPrice").attr("href", "javascript:goExternalRealPrice('http://www.kais.kr/realtyprice/gsindividual/siteLink.htm');");
-        $("#realPrice").text("확인하기 (pc로 확인가능)");
-        $("#realPrice").attr("class", "btn_md_color");
-        $("#realPrice_dd").show();
-        $("#bond_dd").hide();
-        $("#taxReduceYn_dd").hide();
-        $("#landNumber_dd").show();
-        $("#taxReduceYn2_dd").show();
-        $("#noHouse_dd").hide();
-        $("#taxOverFour_dd").hide();
-      }
-      if(realType == "RER005"){
-        $("#realPrice").attr("href", "javascript:goExternalRealPrice('http://www.kais.kr/realtyprice/gsindividual/siteLink.htm');");
-        $("#realPrice").text("확인하기 (pc로 확인가능)");
-        $("#realPrice").attr("class", "btn_md_color");
-        $("#realPrice_dd").show();
-        $("#bond_dd").hide();
-        $("#taxReduceYn_dd").hide();
-        $("#landNumber_dd").show();
-        $("#taxReduceYn2_dd").hide();
-        $("#noHouse_dd").hide();
-        $("#taxOverFour_dd").hide();
-      }
-    }
-
-    if(lawType == "QRT005"){
-      if(realType == "RER001"){
-        $("#realPrice").attr("href", "javascript:goExternalRealPrice('http://aao.kab.co.kr/aaofx/');");
-        $("#realPrice").text("확인하기 (pc로 확인가능)");
-        $("#realPrice").attr("class", "btn_md_color");
-        $("#realPrice_dd").show();
-        $("#bond_dd").hide();
-        $("#taxReduceYn_dd").show();
-        $("#landNumber_dd").hide();
-        $("#taxReduceYn2_dd").hide();
-        $("#noHouse_dd").show();
-      }
-      if(realType == "RER002"){
-        $("#realPrice").attr("href", "javascript:goExternalRealPrice('http://www.kais.kr/realtyprice/hpindividual/siteLink.htm');");
-        $("#realPrice").text("확인하기 (pc로 확인가능)");
-        $("#realPrice").attr("class", "btn_md_color");
-        $("#realPrice_dd").show();
-        $("#bond_dd").hide();
-        $("#taxReduceYn_dd").show();
-        $("#landNumber_dd").show();
-        $("#taxReduceYn2_dd").hide();
-        $("#noHouse_dd").show();
-      }
-      if(realType == "RER003"){
-        $("#realPrice").attr("href", "#");
-        $("#realPrice").text("부동산 소재지 시,군,구청에 문의하기");
-        $("#realPrice").attr("class", "btn_md_black");
-        $("#realPrice_dd").show();
-        $("#bond_dd").hide();
-        $("#taxReduceYn_dd").hide();
-        $("#landNumber_dd").hide();
-        $("#taxReduceYn2_dd").hide();
-        $("#noHouse_dd").hide();
-      }
-      if(realType == "RER004"){
-        $("#realPrice").attr("href", "javascript:goExternalRealPrice('http://www.kais.kr/realtyprice/gsindividual/siteLink.htm');");
-        $("#realPrice").text("확인하기 (pc로 확인가능)");
-        $("#realPrice").attr("class", "btn_md_color");
-        $("#realPrice_dd").show();
-        $("#bond_dd").hide();
-        $("#taxReduceYn_dd").hide();
-        $("#landNumber_dd").show();
-        $("#taxReduceYn2_dd").show();
-        $("#noHouse_dd").hide();
-      }
-      if(realType == "RER005"){
-        $("#realPrice").attr("href", "javascript:goExternalRealPrice('http://www.kais.kr/realtyprice/gsindividual/siteLink.htm');");
-        $("#realPrice").text("확인하기 (pc로 확인가능)");
-        $("#realPrice").attr("class", "btn_md_color");
-        $("#realPrice_dd").show();
-        $("#bond_dd").hide();
-        $("#taxReduceYn_dd").hide();
-        $("#landNumber_dd").show();
-        $("#taxReduceYn2_dd").hide();
-        $("#noHouse_dd").hide();
-      }
-    }
-
-  }
-
-  function goCalculate(){
-    var lawType = $("#lawType").val();
-    var realType = $("#realType").val();
-    var price = $("#price").val();
-    var isOver85 = $('input[name="taxReduce"]:checked').val();
-    var bond = $("#bond").val();
-    var landNumber = $("#landNumber").val();
-    var taxReduce2 = $('input[name="taxReduce2"]:checked').val();
-    var noHouse = $('input[name="noHouse"]:checked').val();
-    var isOverFour = $('input[name="taxOverFour"]:checked').val();
-
-    if(price == null || price == ""){
-      alert("공시지가를 입력하세요.");
-      return;
-    }
-
-    if(realType == "RER001" || realType == "RER002"){
-      if(lawType != "QRT002" && lawType != "QRT003"){
-        if(_isNull(isOver85)){
-          alert("전용면적을 선택하세요.");
-          return;
-        }
-      }
-
-      if(lawType == "QRT001"){
-        if(_isNull(isOverFour)){
-          alert("보유주택 수를 선택하세요.");
-          return;
-        }
-      }
-
-    }
-
-    if(!_isNull(price))
-      price = _priceNoCurrentFormat(price);
-
-    resultHtml(lawType, realType, price, isOver85, bond, landNumber, taxReduce2, noHouse, isOverFour);
-  }
-
-  function resultHtml(lawType, realType, price, isOver85, bond, landNumber, taxReduce2, noHouse, isOverFour){
-    var totalPrice = 0;
-    var reductType = "";
-
-    if(lawType == "QRT001" && realType == "RER004"){
-      reductType = taxReduce2;
-    }
-    if(lawType == "QRT004" && realType == "RER004"){
-      reductType = taxReduce2;
-    }
-    if(lawType == "QRT003"){
-      reductType = bond;
-    }
-    if(lawType == "QRT005"){
-      if(realType == "RER001" || realType == "RER002"){
-        reductType = noHouse;
-      }
-      if(realType == "RER004"){
-        reductType = taxReduce2;
-      }
-    }
-
-    var paramIsOver85 = true;
-    if(isOver85 == "false")
-      paramIsOver85 = false;
-
-    var paramIsOverFour = true;
-    if(isOverFour == "false")
-      paramIsOverFour = false;
-
-    var result = _getTaxInfo(lawType, realType, landNumber, paramIsOver85, reductType, price, paramIsOverFour);
-    var keys = Object.keys( result );
-
-    var htmlArray = new Array();
-    htmlArray.push("<colgroup>");
-    htmlArray.push("	<col width='25%'/>");
-    htmlArray.push("	<col width='*'/>");
-    htmlArray.push("	<col width='25%'/>");
-    htmlArray.push("</colgroup>");
-    htmlArray.push("<thead>");
-    htmlArray.push("	<tr>");
-    htmlArray.push("		<th scope='col'>항목</th>");
-    htmlArray.push("		<th scope='col'>금액</th>");
-    htmlArray.push("		<th scope='col'>비고</th>");
-    htmlArray.push("	</tr>");
-    htmlArray.push("</thead>");
-    htmlArray.push("<tbody>");
-
-    for(var i=0; i < keys.length; i++){
-
-      if(keys[i].indexOf("율") >= 0){
-        continue;
-      }
-
-      htmlArray.push("<tr>");
-      htmlArray.push("	<td class='opt'>"+keys[i]+"</td>");
-      htmlArray.push("	<td class='price'>");
-      htmlArray.push("		<span class='mark if_plus'></span>");
-      htmlArray.push("		<span class='lineup'>");
-      htmlArray.push("			<span class='number'>"+_setCurrency(result[keys[i]])+"</span>");
-      htmlArray.push("			<span class='unit'>원</span>");
-      htmlArray.push("		</span>");
-      htmlArray.push("	</td>");
-      if(!_isNull(result[keys[i]+"율"])){
-        htmlArray.push("	<td class='add_txt' align='right'>"+result[keys[i]+'율']+" %</td>");
-      }else{
-        htmlArray.push("	<td class='add_txt'></td>");
-      }
-      htmlArray.push("</tr>");
-
-      totalPrice += Number(result[keys[i]]);
-    }
-
-    htmlArray.push("<tr>");
-    htmlArray.push("	<td class='opt'>법정수수료</td>");
-    htmlArray.push("	<td class='price'>");
-    htmlArray.push("		<span class='mark if_plus'></span>");
-    htmlArray.push("		<span class='lineup'>");
-    htmlArray.push("			<span class='number'>"+_setCurrency(_getJudicialServiceCost(price, lawType))+"</span>");
-    htmlArray.push("			<span class='unit'>원</span>");
-    htmlArray.push("		</span>");
-    htmlArray.push("	</td>");
-    htmlArray.push("	<td class='add_txt'></td>");
-    htmlArray.push("</tr>");
-    htmlArray.push("</tbody>");
-
-    totalPrice += Number(_getJudicialServiceCost(price, lawType));
-
-    htmlArray.push("<tfoot>");
-    htmlArray.push("	<tr>");
-    htmlArray.push("		<td class='opt'>합계</td>");
-    htmlArray.push("		<td class='price'>");
-    htmlArray.push("			<span class='mark if_equal'></span>");
-    htmlArray.push("			<span class='lineup'>");
-    htmlArray.push("				<span class='number'>"+_setCurrency(totalPrice)+"</span>");
-    htmlArray.push("				<span class='unit'>원</span>");
-    htmlArray.push("			</span>");
-    htmlArray.push("		</td>");
-    htmlArray.push("		<td class='add_txt'></td>");
-    htmlArray.push("	</tr>");
-    htmlArray.push("</tfoot>");
-
-    $("#show_paper").html(htmlArray.join(""));
-
-    $("#showCalculate").show();
-    $("#showRequestButton").show();
-  }
-
-  function goExternalRealPrice(url){
-    window.open("http://www.realtyprice.kr/", "_blank");
-  }
-</script>
 
 </body>
 
