@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Open API RESTful 테스트</title>
+  <script>
+    function goNSDI(){
+      /* Javascript 샘플 코드 */
+      var xhr = new XMLHttpRequest();
+      var url = 'http://apis.data.go.kr/1611000/nsdi/ReferLandPriceService/attr/getReferLandPriceAttr'; /*URL*/
+      var queryParams = '?' + encodeURIComponent('ServiceKey') + '='+'pKWNytKUFvGZFQl2A%2BzesvVn34PZRlOoRksAwg4ulGbe1%2B1zBqnzbDY9fhFd%2F58Xf9LsV%2FHK%2FPBUAVC%2Ff9vbEA%3D%3D'; /*Service Key*/
+      queryParams += '&' + encodeURIComponent('ldCode') + '=' + encodeURIComponent('1150010100'); /*법정동코드(2~10자리)*/
+      queryParams += '&' + encodeURIComponent('stdrYear') + '=' + encodeURIComponent('2019'); /*기준년도(YYYY: 4자리)*/
+      queryParams += '&' + encodeURIComponent('format') + '=' + encodeURIComponent('json'); /*응답결과 형식(xml 또는 json)*/
+      queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('10'); /*검색건수*/
+      queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /*페이지 번호*/
+      xhr.open('GET', url + queryParams);
+      xhr.onreadystatechange = function () {
+          if (this.readyState == 4) {
+              alert('Status: '+this.status+' Headers: '+JSON.stringify(this.getAllResponseHeaders())+' Body: '+this.responseText);
+          }
+      };
+
+      xhr.send('');
+    }
+  </script>
+
+</head>
+<body>
+<div class="text-center">
+  <button type="button" class="btn btn-primary" onclick="javascript:goNSDI();">공시지가 조회</button>
+</div>
+<div class="text-center" id="content">
+</div>
+
+</body>
+</html>

@@ -19,6 +19,7 @@
   <script src="../js/calculator.js" type="text/javascript"></script>
   <script src="../js/calculator_apply.js" type="text/javascript"></script>
   <script src="../js/calculator_common.js" type="text/javascript"></script>
+  <script src="../js/calculator_tax.js" type="text/javascript"></script>
   <link href="../css/modern-business.css" rel="stylesheet">
 
 </head>
@@ -85,98 +86,124 @@
             <div class="w-100" ><h3></h3></div>
             <div class="col"></div>
             <div class="col-8">
-              &nbsp;&nbsp;&nbsp;&nbsp;
               <input type="text" id="moneyText" style="color:gray; border:0; display:none;" readonly="true" />
             </div>
 
             <div class="w-100"><h3></h3></div>
 
-            <div class="col" id="del_cond_title">감면조항</div>
-            <div class="col-8" id="del_cond_content">
-              <div class="custom-control custom-radio">
-                <input type="radio" id="customRadio1" name="del_cond" class="custom-control-input" value="false" checked>
-                <label class="custom-control-label" for="customRadio1">전용면적 85제곱미터 이하</label>
+              <div class="col" id="tax_title"><span id="taxSpan">시가표준액</span></div>
+              <div class="col-8" id="tax_content">
+                <input type="tel" id="tax" class="form-control" placeholder="예) 100,000,000" data-v-max="99999999999" data-v-min="0" data-a-sign="원" data-p-sign="s" onchange="taxCheck();">
               </div>
-              <div class="custom-control custom-radio">
-                <input type="radio" id="customRadio2" name="del_cond" class="custom-control-input" value="true">
-                <label class="custom-control-label" for="customRadio2">전용면적 85제곱미터 초과</label>
+              <div class="w-100" ><h3></h3></div>
+              <div class="col"></div>
+              <div class="col-8">
+                <input type="text" id="taxText" style="color:gray; border:0; display:none;" readonly="true" />
               </div>
-            </div>
 
             <div class="w-100"><h3></h3></div>
 
-            <div class="col" id="own_house_title">보유주택수</div>
-            <div class="col-8" id="own_house_content">
-              <div class="custom-control custom-radio">
-                <input type="radio" id="customRadio3" name="own_house" class="custom-control-input" value="false" checked>
-                <label class="custom-control-label" for="customRadio3">4주택 미만</label>
+              <div class="col" id="area_title">대상물건지역</div>
+              <div class="col-8" id="area_content">
+                <div class="custom-control custom-radio">
+                  <input type="radio" id="areaRadio1" name="area" class="custom-control-input" value="false" checked>
+                  <label class="custom-control-label" for="areaRadio1">서울특별시 및 광역시</label>
+                </div>
+                <div class="custom-control custom-radio">
+                  <input type="radio" id="areaRadio2" name="area" class="custom-control-input" value="true">
+                  <label class="custom-control-label" for="areaRadio2">그 밖의 지역</label>
+                </div>
               </div>
-              <div class="custom-control custom-radio">
-                <input type="radio" id="customRadio4" name="own_house" class="custom-control-input" value="true">
-                <label class="custom-control-label" for="customRadio4">4주택 이상</label>
-              </div>
-            </div>
 
             <div class="w-100"><h3></h3></div>
 
-            <div class="col" id="del_cond2_title">무주택자감면<br><font size="1" color="gray">(세대원포함)</font></div>
-            <div class="col-8" id="del_cond2_content">
-              <div class="custom-control custom-radio">
-                <input type="radio" id="customRadio5" name="del_cond2" class="custom-control-input" value="1">
-                <label class="custom-control-label" for="customRadio5">무주택</label>
+              <div class="col" id="del_cond_title">감면조항</div>
+              <div class="col-8" id="del_cond_content">
+                <div class="custom-control custom-radio">
+                  <input type="radio" id="customRadio1" name="del_cond" class="custom-control-input" value="false" checked>
+                  <label class="custom-control-label" for="customRadio1">전용면적 85제곱미터 이하</label>
+                </div>
+                <div class="custom-control custom-radio">
+                  <input type="radio" id="customRadio2" name="del_cond" class="custom-control-input" value="true">
+                  <label class="custom-control-label" for="customRadio2">전용면적 85제곱미터 초과</label>
+                </div>
               </div>
-              <div class="custom-control custom-radio">
-                <input type="radio" id="customRadio6" name="del_cond2" class="custom-control-input" value="2" checked>
-                <label class="custom-control-label" for="customRadio6">1주택 이상</label>
-              </div>
-            </div>
 
             <div class="w-100"><h3></h3></div>
 
-            <div class="col" id="bond_max_title">채권최고액</div>
-            <div class="col-8" id="bond_max_content">
-              <select class="form-control form-control-sm" id="bond_max">
-                <option value="100">100%</option>
-                <option value="110">110%</option>
-                <option value="120">120%</option>
-                <option value="130">130%</option>
-                <option value="140">140%</option>
-                <option value="150">150%</option>
-              </select>
-            </div>
+              <div class="col" id="own_house_title">보유주택수</div>
+              <div class="col-8" id="own_house_content">
+                <div class="custom-control custom-radio">
+                  <input type="radio" id="customRadio3" name="own_house" class="custom-control-input" value="false" checked>
+                  <label class="custom-control-label" for="customRadio3">4주택 미만</label>
+                </div>
+                <div class="custom-control custom-radio">
+                  <input type="radio" id="customRadio4" name="own_house" class="custom-control-input" value="true">
+                  <label class="custom-control-label" for="customRadio4">4주택 이상</label>
+                </div>
+              </div>
 
             <div class="w-100"><h3></h3></div>
 
-            <div class="col" id="square_title">필지수</div>
-            <div class="col-8" id="square_content">
-              <select class="form-control form-control-sm" id="square">
-                <option value="1">1필지</option>
-                <option value="2">2필지</option>
-                <option value="3">3필지</option>
-                <option value="4">4필지</option>
-                <option value="5">5필지</option>
-                <option value="6">6필지</option>
-                <option value="7">7필지</option>
-                <option value="8">8필지</option>
-                <option value="9">9필지</option>
-                <option value="10">10필지</option>
-              </select>
-            </div>
+
+              <div class="col" id="del_cond2_title">무주택자감면<br><font size="1" color="gray">(세대원포함)</font></div>
+              <div class="col-8" id="del_cond2_content">
+                <div class="custom-control custom-radio">
+                  <input type="radio" id="customRadio5" name="del_cond2" class="custom-control-input" value="1">
+                  <label class="custom-control-label" for="customRadio5">무주택</label>
+                </div>
+                <div class="custom-control custom-radio">
+                  <input type="radio" id="customRadio6" name="del_cond2" class="custom-control-input" value="2" checked>
+                  <label class="custom-control-label" for="customRadio6">1주택 이상</label>
+                </div>
+              </div>
 
             <div class="w-100"><h3></h3></div>
 
-            <div class="col" id="del_cond3_title">감면조항</div>
-            <div class="col-8" id="del_cond3_content">
-              <div class="custom-control custom-radio">
-                <input type="radio" id="customRadio7" name="del_cond3" class="custom-control-input" value="2" checked>
-                <label class="custom-control-label" for="customRadio7">농지원부2년이상보유</label>
-              </div>
-              <div class="custom-control custom-radio">
-                <input type="radio" id="customRadio8" name="del_cond3" class="custom-control-input" value="1">
-                <label class="custom-control-label" for="customRadio8">감면사항없음</label>
-              </div>
-            </div>
 
+              <div class="col" id="bond_max_title">채권최고액</div>
+              <div class="col-8" id="bond_max_content">
+                <select class="form-control form-control-sm" id="bond_max">
+                  <option value="100">100%</option>
+                  <option value="110">110%</option>
+                  <option value="120">120%</option>
+                  <option value="130">130%</option>
+                  <option value="140">140%</option>
+                  <option value="150">150%</option>
+                </select>
+              </div>
+
+            <div class="w-100"><h3></h3></div>
+
+              <div class="col" id="square_title">필지수</div>
+              <div class="col-8" id="square_content">
+                <select class="form-control form-control-sm" id="square">
+                  <option value="1">1필지</option>
+                  <option value="2">2필지</option>
+                  <option value="3">3필지</option>
+                  <option value="4">4필지</option>
+                  <option value="5">5필지</option>
+                  <option value="6">6필지</option>
+                  <option value="7">7필지</option>
+                  <option value="8">8필지</option>
+                  <option value="9">9필지</option>
+                  <option value="10">10필지</option>
+                </select>
+              </div>
+
+            <div class="w-100"><h3></h3></div>
+
+              <div class="col" id="del_cond3_title">감면조항</div>
+              <div class="col-8" id="del_cond3_content">
+                <div class="custom-control custom-radio">
+                  <input type="radio" id="customRadio7" name="del_cond3" class="custom-control-input" value="2" checked>
+                  <label class="custom-control-label" for="customRadio7">농지원부2년이상보유</label>
+                </div>
+                <div class="custom-control custom-radio">
+                  <input type="radio" id="customRadio8" name="del_cond3" class="custom-control-input" value="1">
+                  <label class="custom-control-label" for="customRadio8">감면사항없음</label>
+                </div>
+              </div>
 
           </div>
           <p></p>
