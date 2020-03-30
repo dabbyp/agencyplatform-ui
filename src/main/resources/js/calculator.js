@@ -273,6 +273,7 @@
     var deungGi = $("#deungGi").val();
     var realType = $("#realType").val();
     var money = $("#money").val();
+
     var delCond = $('input[name="del_cond"]:checked').val();
     var bondMax = $("#bond_max").val();
     var square = $("#square").val();
@@ -283,8 +284,16 @@
 //    alert(deungGi + ' | ' + realType + ' | ' + money + ' | ' + delCond + ' | ' + ' | ' + bondMax + ' | ' + square + ' | ' + delCond3 + ' | ' + delCond2 + ' | ' + ownHouse);
 
     if(money == null || money == ""){
-      alert("공시지가를 입력하세요.");
+      alert("거래금액을 입력하세요.");
       return;
+    }
+
+    // 전세권 설정이 아닌 경우
+    if(realType != "RT002"){
+        if(tax == null || tax == ""){
+          alert("시가표준액(공시지가)을 입력하세요.");
+          return;
+        }
     }
 
     if(realType == "RT001" || realType == "RT002"){

@@ -117,8 +117,8 @@ function _makeRepayContent(seq, total, repay, interest,  balance, repayPrice){
 
 // 2016.05.25
 // parameter : 등기종류, 부동산소재지, 부동산종류, 시가표준액
-// 등기종류 type => 소유권이전 : DG001 , 상속,증여 : DG005, 근저당권설정 : DG003
-// 부동산종류 kind => RT001 : 주택, RER003 : 토지, RER004 : 주택,토지외 부동산
+// 등기종류 type => 소유권이전 : DG001, 근저당권설정 : DG003, 상속 : DG004, 증여 : DG005
+// 부동산종류 kind => RT001 : 주택, RT003 : 토지, RT004 : 주택,토지외 부동산
 // 채권할인율 : bondDiscountRate 서버에서 조회 후 입력
 function _getHousingBond(type, isSpecialCity, kind, price, bondDiscountRate){
 	
@@ -722,15 +722,16 @@ function _getRealEstateAgentCost(type, kind, amount, rentAmount, isOver85){
 	return resultJsonStr;
 }
 
-//세금 계산
+//부동산 등기 세금 계산
 function _getTaxInfo(type, kind, landCount, isOver85, reductType, amount, isOverFour){
-	
 	//alert("type:"+type+",kind:"+kind+",landCount:"+landCount+",isOver85:"+isOver85+",reductType:"+reductType+",amount:"+amount);
 
 	switch(type){
 	case "DG001":
 		//부동산소유권 등기
-		return _calculateTaxTransferRight(kind, landCount, isOver85, reductType, amount, isOverFour);
+		var tmp = _calculateTaxTransferRight(kind, landCount, isOver85, reductType, amount, isOverFour);
+
+		return tmp;
 		//break;
 	case "DG002":
 		//전세권설정 등기
@@ -1053,7 +1054,7 @@ function _calculateTaxTransferRight(kind, landCount, isOver85, reductType, amoun
 	var tax3 = 0; //지방교육세
 	var tax4 = 0; //인지대
 	var tax5 = 0; //증지대
-	
+	var tax6 = 0; //채권(자기부담금)
 
 	var tax1Rate = 0;
 	var tax2Rate = 0;
@@ -1083,7 +1084,10 @@ function _calculateTaxTransferRight(kind, landCount, isOver85, reductType, amoun
 			tax4 = 350000;
 		
 		tax5 = 13000;
-		
+
+		//채권
+		tax6 = cal_0();
+        alert(tax6);
 		break;
 	case "RT002":
 		//주택
@@ -1108,6 +1112,10 @@ function _calculateTaxTransferRight(kind, landCount, isOver85, reductType, amoun
 		tax5 = 26000;
 		if(landCount > 1)
 			tax5 = tax5 + (13000 * (landCount-1) );		
+
+		//채권
+		tax6 = cal_0();
+
 		break;
 	case "RT003":
 		//건물
@@ -1122,7 +1130,10 @@ function _calculateTaxTransferRight(kind, landCount, isOver85, reductType, amoun
 		tax4 = _calculateTax4(amount);
 		
 		tax5 = 13000;
-		
+
+		//채권
+		tax6 = cal_0();
+
 		break;
 	case "RT004":
 		//농지
@@ -1160,7 +1171,10 @@ function _calculateTaxTransferRight(kind, landCount, isOver85, reductType, amoun
 		tax5 = 13000;
 		if(landCount > 1)
 			tax5 = tax5 + (13000 * (landCount-1) );		
-		
+
+		//채권
+		tax6 = cal_0();
+
 		break;
 	case "RT005":
 		//농지외
@@ -1177,7 +1191,10 @@ function _calculateTaxTransferRight(kind, landCount, isOver85, reductType, amoun
 		tax5 = 13000;
 		if(landCount > 1)
 			tax5 = tax5 + (13000 * (landCount-1) );		
-		
+
+		//채권
+		tax6 = cal_0();
+
 		break;
 	default:
 		break;
@@ -1191,7 +1208,8 @@ function _calculateTaxTransferRight(kind, landCount, isOver85, reductType, amoun
 			"증지대": _transferInteger(tax5),				
 			"취득세율" : tax1Rate,
 			"지방교육세율" : tax3Rate,
-			"농어촌특별세율" : tax2Rate
+			"농어촌특별세율" : tax2Rate,
+			"채권(자기부담금)" : _transferInteger(tax6)
 	};
 		
 	return resultJsonStr;
@@ -1221,9 +1239,11 @@ function _calculateTaxOver85(amount, isOverFour){
 		tax1 : 0,
 		tax2 : 0,
 		tax3 : 0,
+		tax4 : 0,
         tax1Rate : 0,
 		tax2Rate : 0,
-		tax3Rate : 0
+		tax3Rate : 0,
+		tax4Rate : 0
 	};
 	
 	if(amount <= 600000000){
@@ -1264,7 +1284,67 @@ function _calculateTaxOver85(amount, isOverFour){
 		tax123.tax3Rate = tax3Rate_2020;
 
 	}
-	
+
+    // 채권
+    tax4 = cal_0();
+
+	return tax123;
+}
+
+//85이하 취득세 계산 (아파트, 주택)
+function _calculateTaxBelow85(amount, isOverFour){
+	var tax123 = {
+			tax1 : 0,
+			tax2 : 0,
+			tax3 : 0,
+			tax4 : 0, // 채권
+			tax1Rate : 0,
+			tax2Rate : 0,
+			tax3Rate : 0,
+			tax4Rate : 0
+		};
+
+	if(amount <= 600000000){
+		var tax1Rate_2020 = standard_2020(amount, isOverFour, false);
+		var tax3Rate_2020 = roundThreeoPoint(tax1Rate_2020 * 0.1);
+
+		tax123.tax1 = _transferInteger(amount * tax1Rate_2020 * 0.01);
+		tax123.tax2 = 0;
+		tax123.tax3 = _transferInteger(amount * tax3Rate_2020 * 0.01);
+
+		tax123.tax1Rate = tax1Rate_2020;
+		tax123.tax2Rate = 0;
+		tax123.tax3Rate = tax3Rate_2020;
+
+	}else if(amount > 600000000 && amount <= 900000000){
+		var tax1Rate_2020 = standard_2020(amount, isOverFour, false);
+		var tax3Rate_2020 = roundThreeoPoint(tax1Rate_2020 * 0.1);
+
+		tax123.tax1 = _transferInteger(amount * tax1Rate_2020 * 0.01);
+		tax123.tax2 = 0;
+		tax123.tax3 = _transferInteger(amount * tax3Rate_2020 * 0.01);
+
+		tax123.tax1Rate = tax1Rate_2020;
+		tax123.tax2Rate = 0;
+		tax123.tax3Rate = tax3Rate_2020;
+
+	}else if(amount > 900000000){
+		var tax1Rate_2020 = standard_2020(amount, isOverFour, false);
+		var tax3Rate_2020 = roundThreeoPoint(tax1Rate_2020 * 0.1);
+
+		tax123.tax1 = _transferInteger(amount * tax1Rate_2020 * 0.01);
+		tax123.tax2 = 0;
+		tax123.tax3 = _transferInteger(amount * tax3Rate_2020 * 0.01);
+
+		tax123.tax1Rate = tax1Rate_2020;
+		tax123.tax2Rate = 0;
+		tax123.tax3Rate = tax3Rate_2020;
+
+	}
+
+	// 채권
+	tax4 = cal_0();
+
 	return tax123;
 }
 
@@ -1305,58 +1385,6 @@ function roundTwoPoint(val){
 function roundThreeoPoint(val){
     var ret = val;
     return ret.toFixed(3);
-}
-
-//85이하 취득세 계산 (아파트, 주택)
-function _calculateTaxBelow85(amount, isOverFour){	
-	var tax123 = {
-			tax1 : 0,
-			tax2 : 0,
-			tax3 : 0,
-			tax1Rate : 0,
-			tax2Rate : 0,
-			tax3Rate : 0
-		};
-	
-	if(amount <= 600000000){
-		var tax1Rate_2020 = standard_2020(amount, isOverFour, false);
-		var tax3Rate_2020 = roundThreeoPoint(tax1Rate_2020 * 0.1);
-		
-		tax123.tax1 = _transferInteger(amount * tax1Rate_2020 * 0.01);		
-		tax123.tax2 = 0;
-		tax123.tax3 = _transferInteger(amount * tax3Rate_2020 * 0.01);
-
-		tax123.tax1Rate = tax1Rate_2020;
-		tax123.tax2Rate = 0;
-		tax123.tax3Rate = tax3Rate_2020;
-
-	}else if(amount > 600000000 && amount <= 900000000){
-		var tax1Rate_2020 = standard_2020(amount, isOverFour, false);
-		var tax3Rate_2020 = roundThreeoPoint(tax1Rate_2020 * 0.1);
-		
-		tax123.tax1 = _transferInteger(amount * tax1Rate_2020 * 0.01);
-		tax123.tax2 = 0;
-		tax123.tax3 = _transferInteger(amount * tax3Rate_2020 * 0.01);
-
-		tax123.tax1Rate = tax1Rate_2020;
-		tax123.tax2Rate = 0;
-		tax123.tax3Rate = tax3Rate_2020;
-
-	}else if(amount > 900000000){
-		var tax1Rate_2020 = standard_2020(amount, isOverFour, false);
-		var tax3Rate_2020 = roundThreeoPoint(tax1Rate_2020 * 0.1);
-		
-		tax123.tax1 = _transferInteger(amount * tax1Rate_2020 * 0.01);		
-		tax123.tax2 = 0;
-		tax123.tax3 = _transferInteger(amount * tax3Rate_2020 * 0.01);
-
-		tax123.tax1Rate = tax1Rate_2020;
-		tax123.tax2Rate = 0;
-		tax123.tax3Rate = tax3Rate_2020;
-
-	}
-	
-	return tax123;
 }
 
 function _transferInteger(value){
