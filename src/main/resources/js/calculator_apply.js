@@ -1087,7 +1087,7 @@ function _calculateTaxTransferRight(kind, landCount, isOver85, reductType, amoun
 
 		//채권
 		tax6 = cal_0();
-        alert(tax6);
+        alert('아파트 채권 : ' + tax6);
 		break;
 	case "RT002":
 		//주택
@@ -1115,10 +1115,11 @@ function _calculateTaxTransferRight(kind, landCount, isOver85, reductType, amoun
 
 		//채권
 		tax6 = cal_0();
+        alert('주택 채권 : ' + tax6);
 
 		break;
 	case "RT003":
-		//건물
+		//상가
 		tax1 = _transferInteger( amount * 0.04 );
 		tax2 = _transferInteger( amount * 0.002 );
 		tax3 = _transferInteger( amount * 0.004 );
@@ -1132,7 +1133,8 @@ function _calculateTaxTransferRight(kind, landCount, isOver85, reductType, amoun
 		tax5 = 13000;
 
 		//채권
-		tax6 = cal_0();
+		tax6 = cal_2();
+        alert('상가 채권 : ' + tax6);
 
 		break;
 	case "RT004":
@@ -1172,8 +1174,9 @@ function _calculateTaxTransferRight(kind, landCount, isOver85, reductType, amoun
 		if(landCount > 1)
 			tax5 = tax5 + (13000 * (landCount-1) );		
 
-		//채권
-		tax6 = cal_0();
+		//농지
+		tax6 = cal_1();
+		alert('농지 : ' + tax6);
 
 		break;
 	case "RT005":
@@ -1193,7 +1196,8 @@ function _calculateTaxTransferRight(kind, landCount, isOver85, reductType, amoun
 			tax5 = tax5 + (13000 * (landCount-1) );		
 
 		//채권
-		tax6 = cal_0();
+		tax6 = cal_2();
+		alert('상가 or 농지 외 : ' + tax6);
 
 		break;
 	default:
@@ -1209,7 +1213,7 @@ function _calculateTaxTransferRight(kind, landCount, isOver85, reductType, amoun
 			"취득세율" : tax1Rate,
 			"지방교육세율" : tax3Rate,
 			"농어촌특별세율" : tax2Rate,
-			"채권(자기부담금)" : _transferInteger(tax6)
+			"채권(자기부담금)" : _transferInteger(tax6 * 0.03)
 	};
 		
 	return resultJsonStr;
@@ -1239,11 +1243,9 @@ function _calculateTaxOver85(amount, isOverFour){
 		tax1 : 0,
 		tax2 : 0,
 		tax3 : 0,
-		tax4 : 0,
         tax1Rate : 0,
 		tax2Rate : 0,
-		tax3Rate : 0,
-		tax4Rate : 0
+		tax3Rate : 0
 	};
 	
 	if(amount <= 600000000){
@@ -1285,9 +1287,6 @@ function _calculateTaxOver85(amount, isOverFour){
 
 	}
 
-    // 채권
-    tax4 = cal_0();
-
 	return tax123;
 }
 
@@ -1297,11 +1296,9 @@ function _calculateTaxBelow85(amount, isOverFour){
 			tax1 : 0,
 			tax2 : 0,
 			tax3 : 0,
-			tax4 : 0, // 채권
 			tax1Rate : 0,
 			tax2Rate : 0,
-			tax3Rate : 0,
-			tax4Rate : 0
+			tax3Rate : 0
 		};
 
 	if(amount <= 600000000){
@@ -1341,9 +1338,6 @@ function _calculateTaxBelow85(amount, isOverFour){
 		tax123.tax3Rate = tax3Rate_2020;
 
 	}
-
-	// 채권
-	tax4 = cal_0();
 
 	return tax123;
 }

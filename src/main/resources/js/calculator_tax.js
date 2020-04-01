@@ -76,17 +76,12 @@ var areaText = {
 };
 
 //** 시가표준액 대비 채권비용 계산
-//부동산 소유권등기(주택, 아파트, 연립)
+//부동산 소유권등기 - 아파트, 주택
  function cal_0() {
-     var q0_0 = $("#area") ,q0_1 = $("#tax");
-
-     var q0_0_val = q0_0.val();
-     if(q0_0_val == "") {
-         alert("대상물건 지역을 선택해주세요.");
-         q0_0.focus();
-         return;
-     }
+     var q0_1 = $("#tax");
+     var q0_0_val = $('input[name="area"]:checked').val();
      var q0_1_num = _moneyNoCurrencyFormat(q0_1.val());
+
      if(q0_1_num < 20000000) {
          alert("시가표준액이 2천만원 미만입니다. 시가표준액 2천만원 이상부터 국민주택채권 매입대상입니다.");
          q0_1.focus();
@@ -127,18 +122,14 @@ var areaText = {
      return Math.round(q0_1_num * rate);
  }
 
- //부동산 소유권등기(토지)
+ //부동산 소유권등기(농지)
  function cal_1() {
-     var q1_0 = $("#q1_0") ,q1_1 = $("#q1_1");
+     var q1_1 = $("#tax");
+     var q1_0_val = $('input[name="area"]:checked').val();
+     var q1_1_num = _moneyNoCurrencyFormat(q0_1.val());
 
-     var q1_0_val = q1_0.val();
-     if(q1_0_val == "") {
-         alert("대상물건 지역을 선택해주세요.");
-         q1_0.focus();
-         return;
-     }
-     //var q1_1_num = Number(unNumberFormat($.trim(q1_1.val())));
-     var q1_1_num = _moneyNoCurrencyFormat(q1_1.val());
+     alert('농지 - tax : ' + q1_1_num + ', area : ' + q1_0_val);
+
      if(q1_1_num < 5000000) {
          alert("시가표준액이 5백만원 미만입니다. 시가표준액 5백만원 이상부터 국민주택채권 매입대상입니다.");
          q1_1.focus();
@@ -159,11 +150,14 @@ var areaText = {
          resultText += " 시가표준액 1억원 이상";
          resultText += " : 시가표준액의 " + (q1_0_val == "0" ? "50/1,000" : "45/1,000" );
      }
-     $("#r1_0").text(numberFormat(""+(Math.round(q1_1_num * rate))) + " 원");
-     $("#r1_1").text(resultText);
+     //$("#r1_0").text(numberFormat(""+(Math.round(q1_1_num * rate))) + " 원");
+     //$("#r1_1").text(resultText);
+
+     return Math.round(q1_1_num * rate);
  }
  //부동산 소유권등기(주택, 토지 外)
  function cal_2() {
+     // 건물분 시가표준액, 토지분 시가표준액
      var q2_0 = $("#q2_0") ,q2_1 = $("#q2_1"), q2_2 = $("#q2_2");
 
      var q2_0_val = q2_0.val();

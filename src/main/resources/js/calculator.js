@@ -388,16 +388,26 @@
       totalmoney += Number(result[keys[i]]);
     }
 
+    var fee_1 = _getJudicialServiceCost(money, deungGi);
+    var fee_2 =  fee_1 * 0.1;
+
+    totalmoney += fee_1 + fee_2;
+
     htmlArray.push("<tr>");
     htmlArray.push("	<td>법정수수료</td>");
     htmlArray.push("	<td align='right'>");
-    htmlArray.push("			"+_setCurrency(_getJudicialServiceCost(money, deungGi))+"원");
+    htmlArray.push("			"+_setCurrency(fee_1)+"원");
     htmlArray.push("	</td>");
     htmlArray.push("	<td></td>");
     htmlArray.push("</tr>");
+    htmlArray.push("<tr>");
+    htmlArray.push("	<td>부가세</td>");
+    htmlArray.push("	<td align='right'>");
+    htmlArray.push("			"+_setCurrency(fee_2)+"원");
+    htmlArray.push("	</td>");
+    htmlArray.push("	<td align='right'>법정수수료의 10%</td>");
+    htmlArray.push("</tr>");
     htmlArray.push("</tbody>");
-
-    totalmoney += Number(_getJudicialServiceCost(money, deungGi));
 
     htmlArray.push("<tfoot>");
     htmlArray.push("	<tr>");
