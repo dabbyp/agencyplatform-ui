@@ -159,7 +159,9 @@
         // 소유권이전
         if(deungGi == "DG001"){
           $("#tax_title").show();$("#tax_content").show();
+          $("#tax_title2").show();$("#tax_content2").show();
           $("#area_title").show();$("#area_content").show();
+          $("#taxSpan").text("시가표준액(건물분)");
         }
         // 전세권설정
         else if(deungGi == "DG002"){
@@ -252,6 +254,8 @@
   function hideAll(){
     // 시가표준액
     $("#tax_title").hide();$("#tax_content").hide();
+    // 시가표준액(토지분)
+    $("#tax_title2").hide();$("#tax_content2").hide();
     // 대상물건지역
     $("#area_title").hide();$("#area_content").hide();
 
@@ -379,7 +383,7 @@
       htmlArray.push("			"+_setCurrency(result[keys[i]])+"원");
       htmlArray.push("	</td>");
       if(!_isNull(result[keys[i]+"율"])){
-        htmlArray.push("	<td align='right'>"+result[keys[i]+'율']+" %</td>");
+        htmlArray.push("	<td align='right'>"+result[keys[i]+'율']+"%</td>");
       }else{
         htmlArray.push("	<td></td>");
       }

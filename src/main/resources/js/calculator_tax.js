@@ -8,7 +8,21 @@ $(function() {
 
 $(function(){
 	$("#tax").keypress(function(){
-		_taxChangeText();
+		_taxChangeText( $("#tax").val(), "");
+	});
+});
+
+$(function() {
+	$('#tax2').autoNumeric('init');
+
+	$('#tax2').click(function() {
+		$('#tax2').caretToStart();
+	});
+});
+
+$(function(){
+	$("#tax2").keypress(function(){
+		_taxChangeText( $("#tax2").val(), "2");
 	});
 });
 
@@ -26,20 +40,20 @@ function unNumberFormat(num) {
 	return (temp_num);
 }
 
-function taxCheck(value) {
-	var value = $("#tax").val();
+function taxCheck(value, th) {
+	//var value = $("#tax").val();
 	var tax = _moneyNoCurrencyFormat(value);
 
 	if (tax == 0 || tax == null || tax == "") {
-		$("#taxText").val("");
-		$("#taxText").hide();
+		$("#tax" + th + "Text").val("");
+		$("#tax" + th + "Text").hide();
 	} else {
-		_taxChangeText();
+		_taxChangeText(value, th);
 	}
 }
 
-function _taxChangeText() {
-	var value = $("#tax").val();
+function _taxChangeText(value, th) {
+    //var value = $("#tax").val();
 	var tax = _moneyNoCurrencyFormat(value);
 	var hanA = new Array("", "일", "이", "삼", "사", "오", "육", "칠", "팔", "구", "십");
 	var danA = new Array("", "십", "백", "천", "", "십", "백", "천", "", "십", "백",
@@ -63,11 +77,11 @@ function _taxChangeText() {
 		result = _stringReplaceAll(result, "억만", "억");
 		result = result + " 원";
 	} else {
-		$("#taxText").val("");
+		$("#tax" + th + "Text").val("");
 	}
+	$("#tax" + th + "Text").val(result);
+	$("#tax" + th + "Text").show();
 
-	$("#taxText").val(result);
-	$("#taxText").show();
 }
 
 var areaText = {
@@ -157,21 +171,11 @@ var areaText = {
  }
  //부동산 소유권등기(주택, 토지 外)
  function cal_2() {
-     // 건물분 시가표준액, 토지분 시가표준액
-     var q2_0 = $("#q2_0") ,q2_1 = $("#q2_1"), q2_2 = $("#q2_2");
-
-     var q2_0_val = q2_0.val();
-     if(q2_0_val == "") {
-         alert("대상물건 지역을 선택해주세요.");
-         q2_0.focus();
-         return;
-     }
-//     var q2_1_num = Number(unNumberFormat($.trim(q2_1.val())));
-//     var q2_2_num = Number(unNumberFormat($.trim(q2_2.val())));
-
+     var q2_1 = $("#tax");
+     var q2_2 = $("#tax2");
+     var q2_0_val = $('input[name="area"]:checked').val();
      var q2_1_num = _moneyNoCurrencyFormat(q2_1.val());
      var q2_2_num = _moneyNoCurrencyFormat(q2_2.val());
-
      if(q2_1_num == 0) {
          alert("건물분 시가표준액은 필수 입력사항입니다.(1천만원 이상) 또는 매입용도를 확인해주세요");
          q2_1.focus();
@@ -234,10 +238,12 @@ var areaText = {
      var r2_0_num = Math.round(q2_1_num * rate_1);
      var r2_1_num = Math.round(q2_2_num * rate_2);
      var r2_2_num = r2_0_num + r2_1_num;
-     $("#r2_0").text(numberFormat(""+r2_0_num) + " 원");
-     $("#r2_1").text(numberFormat(""+r2_1_num) + " 원");
-     $("#r2_2").text(numberFormat(""+r2_2_num) + " 원");
-     $("#r2_3").text(resultText_1 + resultText_2);
+//     $("#r2_0").text(numberFormat(""+r2_0_num) + " 원");
+//     $("#r2_1").text(numberFormat(""+r2_1_num) + " 원");
+//     $("#r2_2").text(numberFormat(""+r2_2_num) + " 원");
+//     $("#r2_3").text(resultText_1 + resultText_2);
+     alert(r2_0_num + " + " + r2_1_num + " = " + r2_2_num);
+     return r2_2_num;
  }
  //부동산 등기(상속, 증여 및 무상취득)
  function cal_3() {

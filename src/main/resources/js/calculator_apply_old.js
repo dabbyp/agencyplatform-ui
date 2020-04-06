@@ -1,3 +1,12 @@
+function _cost_test(){
+	var result = _getHousingBond("DG001", true, "RT001", 150000000, 1.5789);
+	var keys = Object.keys( result );
+	
+	for(var i=0;i<keys.length;i++){
+		alert(keys[i] +":"+result[keys[i]]);
+	}
+}
+
 /*
 대출이자 계산기
 repayMethod(대출방법) : 원리금균등시납부:RM001, 원금균등시납부:RM002, 만기일시상환:RM003
@@ -104,6 +113,160 @@ function _makeRepayContent(seq, total, repay, interest,  balance, repayPrice){
 			"대출잔액": _transferInteger2(balance),
 			"매회납입액":_transferInteger2(repayPrice)
 	};
+}
+
+// 2016.05.25
+// parameter : 등기종류, 부동산소재지, 부동산종류, 시가표준액
+// 등기종류 type => 소유권이전 : DG001, 근저당권설정 : DG003, 상속 : DG004, 증여 : DG005
+// 부동산종류 kind => RT001 : 주택, RT003 : 토지, RT004 : 주택,토지외 부동산
+// 채권할인율 : bondDiscountRate 서버에서 조회 후 입력
+function _getHousingBond(type, isSpecialCity, kind, price, bondDiscountRate){
+	
+	var amount="";
+	var rate=0.0;
+
+	switch(type){
+	case "DG001":
+		if(isSpecialCity){
+			if(kind == "RT001"){
+				//주택
+				if(price >= 20000000 && price < 50000000){
+					rate = 1.3;					
+				}else if(price >= 50000000 && price < 100000000){
+					rate = 1.9;
+				}else if(price >= 100000000 && price < 160000000){
+					rate = 2.1;
+				}else if(price >= 160000000 && price < 260000000){
+					rate = 2.3;
+				}else if(price >= 260000000 && price < 600000000){
+					rate = 2.6;
+				}else if(price >= 600000000){
+					rate = 3.1;
+				}
+
+			}else if(kind == "RT003"){
+				//토지
+				if(price >= 5000000 && price < 50000000){
+					rate = 2.5;
+				}else if(price >= 50000000 && price < 100000000){
+					rate = 4.0;
+				}else if(price >= 100000000){
+					rate = 5.0;
+				}
+
+			}else{
+				if(price >= 10000000 && price < 130000000){
+					rate = 1.0;
+				}else if(price >= 130000000 && price < 250000000){
+					rate = 1.6;
+				}else if(price >= 250000000){
+					rate = 2.0;
+				}
+
+			}
+
+		}else{
+			if(kind == "RT001"){
+				//주택
+				if(price >= 20000000 && price < 50000000){
+					rate = 1.3;
+				}else if(price >= 50000000 && price < 100000000){
+					rate = 1.4;
+				}else if(price >= 100000000 && price < 160000000){
+					rate = 1.6;
+				}else if(price >= 160000000 && price < 260000000){
+					rate = 1.8;
+				}else if(price >= 260000000 && price < 600000000){
+					rate = 2.1;
+				}else if(price >= 600000000){
+					rate = 2.6;
+				}
+
+			}else if(kind == "RT003"){
+				//토지
+				if(price >= 5000000 && price < 50000000){
+					rate = 2.0;
+				}else if(price >= 50000000 && price < 100000000){
+					rate = 3.5;
+				}else if(price >= 100000000){
+					rate = 4.5;
+				}
+
+			}else{
+				if(price >= 10000000 && price < 130000000){
+					rate = 0.8;
+				}else if(price >= 130000000 && price < 250000000){
+					rate = 1.4;
+				}else if(price >= 250000000){
+					rate = 1.8;
+				}
+
+			}
+		}
+		break;
+	case "DG003":
+		if(isSpecialCity){
+			if(price >= 10000000 && price < 50000000){
+				rate = 1.8;
+			}else if(price >= 50000000 && price < 150000000){
+				rate = 2.8;
+			}else if(price >= 150000000){
+				rate = 4.2;
+			}
+		}else{
+			if(price >= 10000000 && price < 50000000){
+				rate = 1.4;
+			}else if(price >= 50000000 && price < 150000000){
+				rate = 2.5;
+			}else if(price >= 150000000){
+				rate = 3.9;
+			}
+		}
+		break;
+
+	case "DG005":
+		if(price >= 20000000){
+			rate = 1.0;
+		}
+		break;
+	}
+	
+	var rate2 = rate / 100;
+	var bondDiscountRate2 = bondDiscountRate / 100;
+	
+	var price2 = price;	
+	if(type == "DG005"){
+		if(price2 > 1000000000)
+			price2 = 1000000000;
+	}
+	
+	var calPrice = _transferInteger(price2 * rate2);
+	
+	calPrice = calPrice / 10000;
+	calPrice = Math.round(calPrice) * 10000;
+	
+	var resultJsonStr = {
+			"시가표준액" : _transferInteger(price2),			
+			"채권매입율" : rate,
+			"채권매입금액" : calPrice,
+			"채권할인율" : bondDiscountRate,
+			"채권매도액": _transferInteger2(calPrice * bondDiscountRate2)
+	};
+	
+	if(type == "DG005"){
+		var resultJsonStr = {
+			"채권최고액" : _transferInteger(price2),			
+			"채권매입율" : rate,
+			"채권매입금액" : calPrice,
+			"채권할인율" : bondDiscountRate,
+			"채권매도액": _transferInteger2(calPrice * bondDiscountRate2)
+		};
+	}
+
+
+	return resultJsonStr;
+
+
 }
 
 //법인관련 비용 계산 :: 법인설립등기
@@ -924,9 +1087,8 @@ function _calculateTaxTransferRight(kind, landCount, isOver85, reductType, amoun
 
 		//채권
 		tax6 = cal_0();
-        //alert('아파트 채권 : ' + tax6);
-        //done
-        break;
+        alert('아파트 채권 : ' + tax6);
+		break;
 	case "RT002":
 		//주택
 		if(isOver85){
@@ -953,8 +1115,8 @@ function _calculateTaxTransferRight(kind, landCount, isOver85, reductType, amoun
 
 		//채권
 		tax6 = cal_0();
-        //alert('주택 채권 : ' + tax6);
-        //done
+        alert('주택 채권 : ' + tax6);
+
 		break;
 	case "RT003":
 		//상가
@@ -972,8 +1134,8 @@ function _calculateTaxTransferRight(kind, landCount, isOver85, reductType, amoun
 
 		//채권
 		tax6 = cal_2();
-        //alert('상가 채권 : ' + tax6);
-        //done
+        alert('상가 채권 : ' + tax6);
+
 		break;
 	case "RT004":
 		//농지
@@ -1051,8 +1213,7 @@ function _calculateTaxTransferRight(kind, landCount, isOver85, reductType, amoun
 			"취득세율" : tax1Rate,
 			"지방교육세율" : tax3Rate,
 			"농어촌특별세율" : tax2Rate,
-			"채권(자기부담금)" : _transferInteger(tax6 * 0.03),
-			"채권(자기부담금)율" : "채권매입금액의 " + _transferInteger(3)
+			"채권(자기부담금)" : _transferInteger(tax6 * 0.03)
 	};
 		
 	return resultJsonStr;
