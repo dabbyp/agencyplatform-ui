@@ -140,9 +140,9 @@ var areaText = {
  function cal_1() {
      var q1_1 = $("#tax");
      var q1_0_val = $('input[name="area"]:checked').val();
-     var q1_1_num = _moneyNoCurrencyFormat(q0_1.val());
+     var q1_1_num = _moneyNoCurrencyFormat(q1_1.val());
 
-     alert('농지 - tax : ' + q1_1_num + ', area : ' + q1_0_val);
+     //alert('농지 - tax : ' + q1_1_num + ', area : ' + q1_0_val);
 
      if(q1_1_num < 5000000) {
          alert("시가표준액이 5백만원 미만입니다. 시가표준액 5백만원 이상부터 국민주택채권 매입대상입니다.");
@@ -242,7 +242,7 @@ var areaText = {
 //     $("#r2_1").text(numberFormat(""+r2_1_num) + " 원");
 //     $("#r2_2").text(numberFormat(""+r2_2_num) + " 원");
 //     $("#r2_3").text(resultText_1 + resultText_2);
-     alert(r2_0_num + " + " + r2_1_num + " = " + r2_2_num);
+     //alert(r2_0_num + " + " + r2_1_num + " = " + r2_2_num);
      return r2_2_num;
  }
  //부동산 등기(상속, 증여 및 무상취득)
@@ -335,8 +335,7 @@ var areaText = {
  }
  //부동산 저당권설정이전
  function cal_4() {
-     var q4_0 = $("#q4_0");
-
+     var q4_0 = $("#money");
 //     var q4_0_num = Number(unNumberFormat($.trim(q4_0.val())));
 
      var q4_0_num = _moneyNoCurrencyFormat(q4_0.val());
@@ -344,7 +343,7 @@ var areaText = {
      if(q4_0_num < 20000000) {
          alert("저당권 설정금액이 2천만원 미만입니다.\n저당권 설정금액 2천만원 이상부터 국민주택채권 매입대상입니다.");
          q4_0.focus();
-         return;
+         return 0;
      }
 
      var rate = 10 /1000;
@@ -354,7 +353,8 @@ var areaText = {
      if(r4_0 >= 1000000000) {
          r4_0 = 1000000000;
      }
-     $("#r4_0").text(numberFormat(""+r4_0) + " 원");
-     $("#r4_1").text(resultText);
+     //$("#r4_0").text(numberFormat(""+r4_0) + " 원");
+     //$("#r4_1").text(resultText);
+     return r4_0;
  }
 // 시가표준액 대비 채권비용 계산 **//

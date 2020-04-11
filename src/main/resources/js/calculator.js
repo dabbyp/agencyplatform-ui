@@ -13,10 +13,11 @@
 
       $("#realType").html(realTypeHtml.join(""));
       $("#moneySpan").text("거래금액");
+      $("#moneySpan").show();$("#money").show();$("#moneyText").show();
 
       $("#own_house_title").show();$("#own_house_content").show();
       $("#del_cond_title").show();$("#del_cond_content").show();
-      $("#tax_title").show();$("#tax_content").show();
+      $("#tax_title").show();$("#tax_content").show();$("#taxText").show();
       $("#area_title").show();$("#area_content").show();
     }
 
@@ -28,6 +29,7 @@
       $("#realType").html(realTypeHtml.join(""));
 
       $("#moneySpan").text("전세보증금");
+      $("#moneySpan").show();$("#money").show();$("#moneyText").show();
     }
 
     // 근저당권 설정
@@ -41,9 +43,10 @@
 
       $("#realType").html(realTypeHtml.join(""));
       $("#moneySpan").text("채무금액");
+      $("#moneySpan").show();$("#money").show();$("#moneyText").show();
 
       $("#bond_max_title").show();$("#bond_max_content").show();
-      $("#tax_title").show();$("#tax_content").show();
+      //$("#tax_title").show();$("#tax_content").show();
     }
 
     // 증여등기
@@ -56,10 +59,12 @@
       realTypeHtml.push("<option value='RT005'>농지외</option>");
 
       $("#realType").html(realTypeHtml.join(""));
-      $("#moneySpan").text("공시지가");
 
       $("#del_cond_title").show();$("#del_cond_content").show();
-      $("#tax_title").show();$("#tax_content").show();
+
+      $("#taxSpan").text("시가표준액(건물분)");
+      $("#tax_title").show();$("#tax_content").show();$("#taxText").show();
+      $("#tax_title2").show();$("#tax_content2").show();$("#tax2Text").show();
       $("#area_title").show();$("#area_content").show();
     }
 
@@ -73,10 +78,11 @@
       realTypeHtml.push("<option value='RT005'>농지외</option>");
 
       $("#realType").html(realTypeHtml.join(""));
-      $("#moneySpan").text("공시지가");
       $("#del_cond_title").show();$("#del_cond_content").show();
       $("#del_cond2_title").show();$("#del_cond2_content").show();
-      $("#tax_title").show();$("#tax_content").show();
+
+      $("#tax_title").show();$("#tax_content").show();$("#taxText").show();
+      $("#tax_title2").show();$("#tax_content2").show();$("#tax2Text").show();
       $("#area_title").show();$("#area_content").show();
     }
   }
@@ -90,31 +96,44 @@
     if(realType == "RT001"){
         // 소유권이전
         if(deungGi == "DG001"){
+          $("#moneySpan").text("거래금액");
+          $("#moneySpan").show();$("#money").show();$("#moneyText").show();
           $("#own_house_title").show();$("#own_house_content").show();
           $("#del_cond_title").show();$("#del_cond_content").show();
-          $("#tax_title").show();$("#tax_content").show();
+
+          $("#taxSpan").text("시가표준액");
+          $("#tax_title").show();$("#tax_content").show();$("#taxText").show();
           $("#area_title").show();$("#area_content").show();
         }
         // 전세권설정
         else if(deungGi == "DG002"){
-
+          $("#moneySpan").text("전세보증금");
+          $("#moneySpan").show();$("#money").show();$("#moneyText").show();
         }
         // 근저당권설정
         else if(deungGi == "DG003"){
+          $("#moneySpan").text("채무금액");
+          $("#moneySpan").show();$("#money").show();$("#moneyText").show();
           $("#bond_max_title").show();$("#bond_max_content").show();
-          $("#tax_title").show();$("#tax_content").show();
+          //$("#tax_title").show();$("#tax_content").show();
         }
         // 증여등기
         else if(deungGi == "DG004"){
           $("#del_cond_title").show();$("#del_cond_content").show();
-          $("#tax_title").show();$("#tax_content").show();
+
+          $("#taxSpan").text("시가표준액(건물분)");
+          $("#tax_title").show();$("#tax_content").show();$("#taxText").show();
+          $("#tax_title2").show();$("#tax_content2").show();$("#tax2Text").show();
           $("#area_title").show();$("#area_content").show();
         }
         // 상속등기
         else if(deungGi == "DG005"){
           $("#del_cond_title").show();$("#del_cond_content").show();
           $("#del_cond2_title").show();$("#del_cond2_content").show();
-          $("#tax_title").show();$("#tax_content").show();
+
+          $("#taxSpan").text("시가표준액(건물분)");
+          $("#tax_title").show();$("#tax_content").show();$("#taxText").show();
+          $("#tax_title2").show();$("#tax_content2").show();$("#tax2Text").show();
           $("#area_title").show();$("#area_content").show();
         }
     }
@@ -122,27 +141,41 @@
     if(realType == "RT002"){
         // 소유권이전
         if(deungGi == "DG001"){
+          $("#moneySpan").text("거래금액");
+          $("#moneySpan").show();$("#money").show();$("#moneyText").show();
+
           $("#own_house_title").show();$("#own_house_content").show();
           $("#del_cond_title").show();$("#del_cond_content").show();
           $("#square_title").show();$("#square_content").show();
-          $("#tax_title").show();$("#tax_content").show();
+
+          $("#taxSpan").text("시가표준액(건물분)");
+          $("#tax_title").show();$("#tax_content").show();$("#taxText").show();
+          $("#tax_title2").show();$("#tax_content2").show();$("#tax2Text").show();
+
           $("#area_title").show();$("#area_content").show();
         }
         // 전세권설정
         else if(deungGi == "DG002"){
-
+          $("#moneySpan").text("전세보증금");
+          $("#moneySpan").show();$("#money").show();$("#moneyText").show();
         }
         // 근저당권설정
         else if(deungGi == "DG003"){
+          $("#moneySpan").text("채무금액");
+          $("#moneySpan").show();$("#money").show();$("#moneyText").show();
+
           $("#bond_max_title").show();$("#bond_max_content").show();
           $("#square_title").show();$("#square_content").show();
-          $("#tax_title").show();$("#tax_content").show();
         }
         // 증여등기
         else if(deungGi == "DG004"){
           $("#del_cond_title").show();$("#del_cond_content").show();
           $("#square_title").show();$("#square_content").show();
-          $("#tax_title").show();$("#tax_content").show();
+
+          $("#taxSpan").text("시가표준액(건물분)");
+          $("#tax_title").show();$("#tax_content").show();$("#taxText").show();
+          $("#tax_title2").show();$("#tax_content2").show();$("#tax2Text").show();
+
           $("#area_title").show();$("#area_content").show();
         }
         // 상속등기
@@ -150,7 +183,11 @@
           $("#del_cond_title").show();$("#del_cond_content").show();
           $("#del_cond2_title").show();$("#del_cond2_content").show();
           $("#square_title").show();$("#square_content").show();
-          $("#tax_title").show();$("#tax_content").show();
+
+          $("#taxSpan").text("시가표준액(건물분)");
+          $("#tax_title").show();$("#tax_content").show();$("#taxText").show();
+          $("#tax_title2").show();$("#tax_content2").show();$("#tax2Text").show();
+
           $("#area_title").show();$("#area_content").show();
         }
     }
@@ -158,29 +195,42 @@
     if(realType == "RT003"){
         // 소유권이전
         if(deungGi == "DG001"){
-          $("#tax_title").show();$("#tax_content").show();
-          $("#tax_title2").show();$("#tax_content2").show();
-          $("#area_title").show();$("#area_content").show();
+          $("#moneySpan").text("거래금액");
+          $("#moneySpan").show();$("#money").show();$("#moneyText").show();
+
           $("#taxSpan").text("시가표준액(건물분)");
+          $("#tax_title").show();$("#tax_content").show();$("#taxText").show();
+          $("#tax_title2").show();$("#tax_content2").show();$("#tax2Text").show();
+
+          $("#area_title").show();$("#area_content").show();
         }
         // 전세권설정
         else if(deungGi == "DG002"){
-
+          $("#moneySpan").text("전세보증금");
+          $("#moneySpan").show();$("#money").show();$("#moneyText").show();
         }
         // 근저당권설정
         else if(deungGi == "DG003"){
+          $("#moneySpan").text("채무금액");
+          $("#moneySpan").show();$("#money").show();$("#moneyText").show();
+
           $("#bond_max_title").show();$("#bond_max_content").show();
           $("#square_title").show();$("#square_content").show();
-          $("#tax_title").show();$("#tax_content").show();
         }
         // 증여등기
         else if(deungGi == "DG004"){
-          $("#tax_title").show();$("#tax_content").show();
+          $("#taxSpan").text("시가표준액(건물분)");
+          $("#tax_title").show();$("#tax_content").show();$("#taxText").show();
+          $("#tax_title2").show();$("#tax_content2").show();$("#tax2Text").show();
+
           $("#area_title").show();$("#area_content").show();
         }
         // 상속등기
         else if(deungGi == "DG005"){
-          $("#tax_title").show();$("#tax_content").show();
+          $("#taxSpan").text("시가표준액(건물분)");
+          $("#tax_title").show();$("#tax_content").show();$("#taxText").show();
+          $("#tax_title2").show();$("#tax_content2").show();$("#tax2Text").show();
+
           $("#area_title").show();$("#area_content").show();
         }
     }
@@ -188,33 +238,46 @@
     if(realType == "RT004"){
         // 소유권이전
         if(deungGi == "DG001"){
+          $("#moneySpan").text("거래금액");
+          $("#moneySpan").show();$("#money").show();$("#moneyText").show();
           $("#square_title").show();$("#square_content").show();
           $("#del_cond3_title").show();$("#del_cond3_content").show();
-          $("#tax_title").show();$("#tax_content").show();
+
+          $("#taxSpan").text("시가표준액");
+          $("#tax_title").show();$("#tax_content").show();$("#taxText").show();
+
           $("#area_title").show();$("#area_content").show();
         }
         // 전세권설정
         else if(deungGi == "DG002"){
-
+          $("#moneySpan").text("전세보증금");
+          $("#moneySpan").show();$("#money").show();$("#moneyText").show();
         }
         // 근저당권설정
         else if(deungGi == "DG003"){
+          $("#moneySpan").text("채무금액");
+          $("#moneySpan").show();$("#money").show();$("#moneyText").show();
           $("#bond_max_title").show();$("#bond_max_content").show();
           $("#square_title").show();$("#square_content").show();
-          $("#tax_title").show();$("#tax_content").show();
         }
         // 증여등기
         else if(deungGi == "DG004"){
           $("#square_title").show();$("#square_content").show();
           $("#del_cond3_title").show();$("#del_cond3_content").show();
-          $("#tax_title").show();$("#tax_content").show();
+
+          $("#taxSpan").text("시가표준액(건물분)");
+          $("#tax_title").show();$("#tax_content").show();$("#taxText").show();
+          $("#tax_title2").show();$("#tax_content2").show();$("#tax2Text").show();
           $("#area_title").show();$("#area_content").show();
         }
         // 상속등기
         else if(deungGi == "DG005"){
           $("#square_title").show();$("#square_content").show();
           $("#del_cond3_title").show();$("#del_cond3_content").show();
-          $("#tax_title").show();$("#tax_content").show();
+
+          $("#tax_title").text("시가표준액(건물분)");
+          $("#tax_title").show();$("#tax_content").show();$("#taxText").show();
+          $("#tax_title2").show();$("#tax_content2").show();$("#tax2Text").show();
           $("#area_title").show();$("#area_content").show();
         }
     }
@@ -222,40 +285,56 @@
     if(realType == "RT005"){
         // 소유권이전
         if(deungGi == "DG001"){
+          $("#moneySpan").text("거래금액");
+          $("#moneySpan").show();$("#money").show();$("#moneyText").show();
+
           $("#square_title").show();$("#square_content").show();
-          $("#tax_title").show();$("#tax_content").show();
+
+          $("#taxSpan").text("시가표준액(건물분)");
+          $("#tax_title").show();$("#tax_content").show();$("#taxText").show();
+          $("#tax_title2").show();$("#tax_content2").show();$("#tax2Text").show();
           $("#area_title").show();$("#area_content").show();
         }
         // 전세권설정
         else if(deungGi == "DG002"){
-
+          $("#moneySpan").text("전세보증금");
+          $("#moneySpan").show();$("#money").show();$("#moneyText").show();
         }
         // 근저당권설정
         else if(deungGi == "DG003"){
+          $("#moneySpan").text("채무금액");
+          $("#moneySpan").show();$("#money").show();$("#moneyText").show();
           $("#bond_max_title").show();$("#bond_max_content").show();
           $("#square_title").show();$("#square_content").show();
-          $("#tax_title").show();$("#tax_content").show();
         }
         // 증여등기
         else if(deungGi == "DG004"){
           $("#square_title").show();$("#square_content").show();
-          $("#tax_title").show();$("#tax_content").show();
+
+          $("#tax_title").text("시가표준액(건물분)");
+          $("#tax_title").show();$("#tax_content").show();$("#taxText").hide();
+          $("#tax_title2").show();$("#tax_content2").show();$("#tax2Text").hide();
           $("#area_title").show();$("#area_content").show();
         }
         // 상속등기
         else if(deungGi == "DG005"){
           $("#square_title").show();$("#square_content").show();
-          $("#tax_title").show();$("#tax_content").show();
+
+          $("#tax_title").text("시가표준액(건물분)");
+          $("#tax_title").show();$("#tax_content").show();$("#taxText").hide();
+          $("#tax_title2").show();$("#tax_content2").show();$("#tax2Text").hide();
           $("#area_title").show();$("#area_content").show();
         }
     }
   }
 
   function hideAll(){
+    // 거래금액
+    $("#moneySpan").hide();$("#money").hide();$("#moneyText").hide();
     // 시가표준액
-    $("#tax_title").hide();$("#tax_content").hide();
+    $("#tax_title").hide();$("#tax_content").hide();$("#taxText").hide();
     // 시가표준액(토지분)
-    $("#tax_title2").hide();$("#tax_content2").hide();
+    $("#tax_title2").hide();$("#tax_content2").hide();$("#tax2Text").hide();
     // 대상물건지역
     $("#area_title").hide();$("#area_content").hide();
 
@@ -271,6 +350,8 @@
     $("#bond_max_title").hide();$("#bond_max_content").hide();
     // 필지수
     $("#square_title").hide();$("#square_content").hide();
+
+    $("#taxSpan").text("시가표준액");
   }
 
   function doCalculate(){
@@ -326,6 +407,15 @@
   function resultHtml(deungGi, realType, money, delCond, bondMax, square, delCond3, delCond2, ownHouse){
     var totalmoney = 0;
     var rType = "";
+
+    /*
+    // 무주택자 감면
+    delCond2 - 무주택 : 1, 1주택 이상 : 2
+    // 감면조항
+    delCond3 - 농지부2년이상보유 : 2, 감면사항없음 : 1
+    // 채권최고액 (%)
+    bondMax - 100 ~ 150
+    */
 
     if(deungGi == "DG001" && realType == "RT004"){
       rType = delCond3;

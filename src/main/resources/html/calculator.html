@@ -79,7 +79,7 @@
 
             <div class="w-100"><h3></h3></div>
 
-            <div class="col"><span id="moneySpan">거래금액</span></div>
+            <div class="col" id="money_title"><span id="moneySpan">거래금액</span></div>
             <div class="col-8">
               <input type="tel" id="money" class="form-control" placeholder="예) 100,000,000" data-v-max="99999999999" data-v-min="0" data-a-sign="원" data-p-sign="s" onchange="moneyCheck();">
             </div>
@@ -208,11 +208,11 @@
               <div class="col" id="del_cond3_title">감면조항</div>
               <div class="col-8" id="del_cond3_content">
                 <div class="custom-control custom-radio">
-                  <input type="radio" id="customRadio7" name="del_cond3" class="custom-control-input" value="2" checked>
+                  <input type="radio" id="customRadio7" name="del_cond3" class="custom-control-input" value="1" checked>
                   <label class="custom-control-label" for="customRadio7">농지원부2년이상보유</label>
                 </div>
                 <div class="custom-control custom-radio">
-                  <input type="radio" id="customRadio8" name="del_cond3" class="custom-control-input" value="1">
+                  <input type="radio" id="customRadio8" name="del_cond3" class="custom-control-input" value="2">
                   <label class="custom-control-label" for="customRadio8">감면사항없음</label>
                 </div>
               </div>
@@ -231,7 +231,11 @@
     <!-- 계산결과 테이블 -->
     <div class="result_box" id="resultTable" style="display:none;">
       <table class="table table-striped" id="result_contents"></table>
-      <div class="exeplain_txt">※ 법률사무소의 기타 경비 및 대행수수료 등은 고려되지 않았음.</div>
+      <div class="exeplain_txt">
+        <p>
+        ※ 법률사무소의 기타 경비 및 대행수수료 등은 고려되지 않았음.<br>
+        ※ 채권(자기부담금) 비율은 변경될 수 있음.</p>
+      </div>
     </div>
     <!-- / 계산결과 테이블 -->
 

@@ -368,7 +368,7 @@ function _getRealEstateAgentCost(type, kind, amount, rentAmount, isOver85){
 	var tax3 = 0;
 	switch(type){
 	case "DG001":
-		//부동산소유권 등기 , RT001 : 아파트(주택), RER002 : 주거형오피스텔, RER003 : 아마트(주택)외 부동산
+		//부동산소유권 등기 , RT001 : 아파트(주택), RT002 : 주거형오피스텔, RT003 : 아파트(주택)외 부동산
 		if(kind == "RT001"){
 			if(amount < 50000000){
 				tax = _transferInteger( amount * 0.006 );
@@ -610,7 +610,7 @@ function _getTaxInfo(type, kind, landCount, isOver85, reductType, amount, isOver
 // reduceType 1 : 무주택, 2 : 1주택이상 
 function _calculateInheritance(kind, landCount, isOver85, reduceType, amount){
 	
-	//RT001:아파트, RER002:주택, RER003:상가, RER004:농지, RER005:농지외
+	//RT001:아파트, RT002:주택, RT003:상가, RT004:농지, RT005:농지외
 	
 	var tax1 = 0; //취득세
 	var tax2 = 0; //지방교육세
@@ -727,8 +727,8 @@ function _calculateInheritance(kind, landCount, isOver85, reduceType, amount){
 //증여등기
 function _calculateGive(kind, landCount, isOver85, reductType, amount){
 	
-	//RT001:아파트, RER002:주택, RER003:상가, RER004:농지, RER005:농지외
-	
+	//RT001:아파트, RT002:주택, RT003:상가, RT004:농지, RT005:농지외
+
 	var tax1 = 0;
 	var tax2 = 0;
 	var tax3 = 0;	
@@ -837,7 +837,8 @@ function _calculateMortgageRight(kind, landCount, reductType, amount){
 	var tax1 = 0;
 	var tax2 = 0;
 	var tax3 = 0;	
-	
+	var tax4 = 0;
+
 	var tax1Rate = 0;
 	var tax2Rate = 0;
 
@@ -872,19 +873,25 @@ function _calculateMortgageRight(kind, landCount, reductType, amount){
 		if(landCount > 1)
 			tax3 = tax3 + (13000 * (landCount-1) );
 	}
-	
+
+    //채권
+    tax4 = cal_4();
+
 	var resultJsonStr = {
 			"등록면허세" : tax1,
 			"지방교육세" : tax2,
 			"증지대" : tax3,
+			"채권(자기부담금)" : _transferInteger(tax4 * 0.03),
 			"등록면허세율" : tax1Rate,
-			"지방교육세율" : tax2Rate
+			"지방교육세율" : tax2Rate,
+			"채권(자기부담금)율" : "채권매입금액의 " + _transferInteger(3)
 	};
 		
 	return resultJsonStr;
 	
 } 
 
+// 소유권이전
 function _calculateTaxTransferRight(kind, landCount, isOver85, reductType, amount, isOverFour){
 	var tax1 = 0; //취득세
 	var tax2 = 0; //농어촌특별세
@@ -977,7 +984,9 @@ function _calculateTaxTransferRight(kind, landCount, isOver85, reductType, amoun
 		break;
 	case "RT004":
 		//농지
-		if(reductType == "1"){
+		//alert("reductType : " + reductType);
+		// 농지원부2년이상 보유
+		if(reductType == "2"){
 			tax1 = _transferInteger( amount * 0.03 );
 			tax2 = _transferInteger( amount * 0.002 );
 			tax3 = _transferInteger( amount * 0.002 );
@@ -986,7 +995,9 @@ function _calculateTaxTransferRight(kind, landCount, isOver85, reductType, amoun
 			tax2Rate = 0.2;
 			tax3Rate = 0.2;
 
-		}else if(reductType == "2"){
+		}
+		// 감면사항 없음
+		else if(reductType == "1"){
 			tax1 = _transferInteger( amount * 0.015 );
 			tax2 = 0;
 			tax3 = _transferInteger( amount * 0.001 );
@@ -995,7 +1006,9 @@ function _calculateTaxTransferRight(kind, landCount, isOver85, reductType, amoun
 			tax2Rate = 0;
 			tax3Rate = 0.1;
 
-		}else if(reductType == "3"){
+		}
+		// ?
+		else if(reductType == "3"){
 			tax1 = _transferInteger( amount * 0.023 );
 			tax2 = _transferInteger( amount * 0.002 );
 			tax3 = _transferInteger( amount * 0.0006 );
@@ -1006,15 +1019,16 @@ function _calculateTaxTransferRight(kind, landCount, isOver85, reductType, amoun
 
 		}
 		
-		tax4 = _calculateTax4(amount);
+		//alert("reductType : " + reductType + ", amount : " + amount);
+        tax4 = _calculateTax4(amount);
 		
 		tax5 = 13000;
 		if(landCount > 1)
 			tax5 = tax5 + (13000 * (landCount-1) );		
 
-		//농지
+		//채권(자기부담금)
 		tax6 = cal_1();
-		alert('농지 : ' + tax6);
+		//alert('채권(자기부담금) : ' + tax6);
 
 		break;
 	case "RT005":
@@ -1035,7 +1049,7 @@ function _calculateTaxTransferRight(kind, landCount, isOver85, reductType, amoun
 
 		//채권
 		tax6 = cal_2();
-		alert('상가 or 농지 외 : ' + tax6);
+		//alert('상가 or 농지 외 : ' + tax6);
 
 		break;
 	default:
