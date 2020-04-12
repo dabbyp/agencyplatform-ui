@@ -1,3 +1,28 @@
+    var selectValue = "";
+    var areaText = {
+        "0": "서울특별시 및 광역시"
+        ,"1" : "그 밖의 지역"
+    };
+
+    function setSelUse(t) {
+        // div class가 inputArea, resultArea로 지정된 것들을 hide
+        $(".inputArea, .resultArea").hide();
+        // div id가 contents로 지정된 것들 중 text type 인 것들의 값을 ""로 설정
+        $("#contents input[type=text]").val("");
+        // div id가 contents로 지정된 것들 중 select type 인 것들의 값이 0보다 큰 것들을 ""로 설정
+        $("#contents select:gt(0)").val("");
+        //$(".resultTextArea").text("");
+        selectValue = "";
+
+        var val = t.value;
+        if(val != "") {
+            // ul id가 inputArea_0으로 지정된 것들을 show
+            $("#inputArea_"+val).show();
+            $("#resultArea_"+val).show();
+            selectValue = val;
+        }
+    }
+
   function changeDeungGi(){
     hideAll();
     var deungGi = $("#deungGi").val();

@@ -1,14 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 
 <head>
 
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!--  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=medium-dpi">
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>법무114</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE10" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <link rel="stylesheet" href="../css/common/style.css">
+
+  <title>법무랑</title>
 
   <!-- Bootstrap core CSS -->
   <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -46,178 +52,229 @@
     <!-- 계산폼 -->
      <div class="tab-content" id="nav-tabContent">
       <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-        <p></p>
-        <div class="container" >
-          <div class="row">
-            <div class="col">
-              <div class="centerBlock">
-                등기종류
-              </div>
-            </div>
-            <div class="col-8">
-              <select id="deungGi" class="form-control form-control-sm" onchange="javascript:changeDeungGi();">
-                <option value="DG001" selected>소유권이전</option>
-                <option value="DG002">전세권설정</option>
-                <option value="DG003">근저당권설정</option>
-                <option value="DG004">증여등기</option>
-                <option value="DG005">상속등기</option>
-              </select>
-            </div>
+        <!--        <form method="post" action="" name="form">-->
+        <div id="contents" class="bondSchArea">
+          <ul>
+            <li><label for="selUse">등기 종류</label>
+              <div>
+<!--                <select id="selUse" onchange="setSelUse(this)" name="selUse">-->
+<!--                <option value="" selected="selected">선택하세요</option>-->
+<!--                <option value="0">부동산 소유권등기(주택, 아파트, 연립)</option>-->
+<!--                <option value="1">부동산 소유권등기(토지)</option>-->
+<!--                <option value="2">부동산 소유권등기(주택, 토지 外)</option>-->
+<!--                <option value="3">부동산 등기 (상속, 증여 및 무상취득)</option>-->
+<!--                <option value="4">부동산 저당권설정이전</option>-->
+<!--                <option value="5">건축허가</option>-->
+<!--                <option value="6">등록, 면허, 허가</option>-->
+<!--                <option value="7">기타 등록, 면허, 허가</option>-->
+<!--              </select>-->
 
-            <div class="w-100"><h3></h3></div>
-
-            <div class="col" id="realTypeTitle">부동산종류</div>
-            <div class="col-8">
-              <select id="realType" class="form-control form-control-sm" onchange="javascript:changeRealType();">
-                <option value="RT001">아파트</option>
-                <option value="RT002">주택(단독주택,다가구주택 등)</option>
-                <option value="RT003">상가(점포,사무실,오피스텔)</option>
-                <option value="RT004">농지</option>
-                <option value="RT005">농지외</option>
-              </select>
-            </div>
-
-            <div class="w-100"><h3></h3></div>
-
-            <div class="col" id="money_title"><span id="moneySpan">거래금액</span></div>
-            <div class="col-8">
-              <input type="tel" id="money" class="form-control" placeholder="예) 100,000,000" data-v-max="99999999999" data-v-min="0" data-a-sign="원" data-p-sign="s" onchange="moneyCheck();">
-            </div>
-            <div class="w-100" ><h3></h3></div>
-            <div class="col"></div>
-            <div class="col-8">
-              <input type="text" id="moneyText" style="color:gray; border:0; display:none;" readonly="true" />
-            </div>
-
-            <div class="w-100"><h3></h3></div>
-
-              <div class="col" id="tax_title"><span id="taxSpan">시가표준액</span></div>
-              <div class="col-8" id="tax_content">
-                <input type="tel" id="tax" class="form-control" placeholder="예) 100,000,000" data-v-max="99999999999" data-v-min="0" data-a-sign="원" data-p-sign="s" onchange="taxCheck(this.val(), '');">
-              </div>
-              <div class="w-100" ><h3></h3></div>
-              <div class="col"></div>
-              <div class="col-8">
-                <input type="text" id="taxText" style="color:gray; border:0; display:none;" readonly="true" />
-              </div>
-
-            <div class="w-100"><h3></h3></div>
-
-            <div class="col" id="tax_title2"><span id="taxSpan2">시가표준액(토지분)</span></div>
-            <div class="col-8" id="tax_content2">
-              <input type="tel" id="tax2" class="form-control" placeholder="예) 100,000,000" data-v-max="99999999999" data-v-min="0" data-a-sign="원" data-p-sign="s" onchange="taxCheck(this.val(), '2');">
-            </div>
-            <div class="w-100" ><h3></h3></div>
-            <div class="col"></div>
-            <div class="col-8">
-              <input type="text" id="tax2Text" style="color:gray; border:0; display:none;" readonly="true" />
-            </div>
-
-            <div class="w-100"><h3></h3></div>
-
-              <div class="col" id="area_title">대상물건지역</div>
-              <div class="col-8" id="area_content">
-                <div class="custom-control custom-radio">
-                  <input type="radio" id="areaRadio1" name="area" class="custom-control-input" value="0" checked>
-                  <label class="custom-control-label" for="areaRadio1">서울특별시 및 광역시</label>
-                </div>
-                <div class="custom-control custom-radio">
-                  <input type="radio" id="areaRadio2" name="area" class="custom-control-input" value="1">
-                  <label class="custom-control-label" for="areaRadio2">그 밖의 지역</label>
-                </div>
-              </div>
-
-            <div class="w-100"><h3></h3></div>
-
-              <div class="col" id="del_cond_title">감면조항</div>
-              <div class="col-8" id="del_cond_content">
-                <div class="custom-control custom-radio">
-                  <input type="radio" id="customRadio1" name="del_cond" class="custom-control-input" value="false" checked>
-                  <label class="custom-control-label" for="customRadio1">전용면적 85제곱미터 이하</label>
-                </div>
-                <div class="custom-control custom-radio">
-                  <input type="radio" id="customRadio2" name="del_cond" class="custom-control-input" value="true">
-                  <label class="custom-control-label" for="customRadio2">전용면적 85제곱미터 초과</label>
-                </div>
-              </div>
-
-            <div class="w-100"><h3></h3></div>
-
-              <div class="col" id="own_house_title">보유주택수</div>
-              <div class="col-8" id="own_house_content">
-                <div class="custom-control custom-radio">
-                  <input type="radio" id="customRadio3" name="own_house" class="custom-control-input" value="false" checked>
-                  <label class="custom-control-label" for="customRadio3">4주택 미만</label>
-                </div>
-                <div class="custom-control custom-radio">
-                  <input type="radio" id="customRadio4" name="own_house" class="custom-control-input" value="true">
-                  <label class="custom-control-label" for="customRadio4">4주택 이상</label>
-                </div>
-              </div>
-
-            <div class="w-100"><h3></h3></div>
-
-
-              <div class="col" id="del_cond2_title">무주택자감면<br><font size="1" color="gray">(세대원포함)</font></div>
-              <div class="col-8" id="del_cond2_content">
-                <div class="custom-control custom-radio">
-                  <input type="radio" id="customRadio5" name="del_cond2" class="custom-control-input" value="1">
-                  <label class="custom-control-label" for="customRadio5">무주택</label>
-                </div>
-                <div class="custom-control custom-radio">
-                  <input type="radio" id="customRadio6" name="del_cond2" class="custom-control-input" value="2" checked>
-                  <label class="custom-control-label" for="customRadio6">1주택 이상</label>
-                </div>
-              </div>
-
-            <div class="w-100"><h3></h3></div>
-
-
-              <div class="col" id="bond_max_title">채권최고액</div>
-              <div class="col-8" id="bond_max_content">
-                <select class="form-control form-control-sm" id="bond_max">
-                  <option value="100">100%</option>
-                  <option value="110">110%</option>
-                  <option value="120">120%</option>
-                  <option value="130">130%</option>
-                  <option value="140">140%</option>
-                  <option value="150">150%</option>
+<!--                <select id="deungGi" class="form-control form-control-sm" onchange="changeDeungGi()">-->
+                <select id="selUse" onchange="setSelUse(this)" name="selUse">
+                  <option value="DG001" selected>소유권이전</option>
+                  <option value="DG002">전세권설정</option>
+                  <option value="DG003">근저당권설정</option>
+                  <option value="DG004">증여등기</option>
+                  <option value="DG005">상속등기</option>
                 </select>
+
               </div>
-
-            <div class="w-100"><h3></h3></div>
-
-              <div class="col" id="square_title">필지수</div>
-              <div class="col-8" id="square_content">
-                <select class="form-control form-control-sm" id="square">
-                  <option value="1">1필지</option>
-                  <option value="2">2필지</option>
-                  <option value="3">3필지</option>
-                  <option value="4">4필지</option>
-                  <option value="5">5필지</option>
-                  <option value="6">6필지</option>
-                  <option value="7">7필지</option>
-                  <option value="8">8필지</option>
-                  <option value="9">9필지</option>
-                  <option value="10">10필지</option>
-                </select>
+            </li>
+          </ul>
+          <!-- 0 부동산 소유권등기(주택, 아파트, 연립) -->
+          <ul id="inputArea_0" class="inputArea">
+            <li><label for="q0_0">대상물건지역</label>
+              <div><select id="q0_0" name="q0_0">
+                <option value="" selected="selected">선택하세요</option>
+                <option value="0">서울특별시 및 광역시</option>
+                <option value="1">그 밖의 지역</option>
+              </select></div>
+            </li>
+            <li><label for="q0_1">건물분 시가표준액</label>
+              <div><input id="q0_1" class="tr" maxlength="25" onkeypress="return onlyNumber();" onkeyup="checkNum(this);" onfocus="inputFocus(this);" onblur="inputBlur(this);" style="ime-mode: disabled" name="q0_1" type="text" /> 원<a title="아파트,연립,다세대(4층 이하) 등" class="btnSm" target="_blank" href="http://www.realtyprice.kr/notice/town/nfSiteLink.htm">공동주택가격열람</a>&nbsp;<a title="단독, 다가구(3층이하) 등" class="btnSm" target="_blank" href="http://www.realtyprice.kr/notice/hpindividual/siteLink.htm">단독주택가격열람</a>
+                <ul class="listDash">
+                  <li>주택은 토지가 포함된 가격</li>
+                  <li>가격이 공시되지 않은 신규분양공동주택은 다음의 취득가격 기준<br><span>&nbsp;* 취득가격 = 분양가격+옵션비용-(분양가 및 옵션에 대한 부가세+선납할인)</span></li>
+                </ul>
               </div>
+            </li>
+          </ul>
 
-            <div class="w-100"><h3></h3></div>
 
-              <div class="col" id="del_cond3_title">감면조항</div>
-              <div class="col-8" id="del_cond3_content">
-                <div class="custom-control custom-radio">
-                  <input type="radio" id="customRadio7" name="del_cond3" class="custom-control-input" value="1" checked>
-                  <label class="custom-control-label" for="customRadio7">농지원부2년이상보유</label>
-                </div>
-                <div class="custom-control custom-radio">
-                  <input type="radio" id="customRadio8" name="del_cond3" class="custom-control-input" value="2">
-                  <label class="custom-control-label" for="customRadio8">감면사항없음</label>
-                </div>
-              </div>
 
-          </div>
+
+<!--        <p></p>-->
+<!--        <div class="container" >-->
+<!--          <div class="row">-->
+<!--            <div class="col">-->
+<!--              <div class="centerBlock">-->
+<!--                등기종류-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="col-8">-->
+<!--              <select id="deungGi" class="form-control form-control-sm" onchange="javascript:changeDeungGi();">-->
+<!--                <option value="DG001" selected>소유권이전</option>-->
+<!--                <option value="DG002">전세권설정</option>-->
+<!--                <option value="DG003">근저당권설정</option>-->
+<!--                <option value="DG004">증여등기</option>-->
+<!--                <option value="DG005">상속등기</option>-->
+<!--              </select>-->
+<!--            </div>-->
+
+<!--            <div class="w-100"><h3></h3></div>-->
+
+<!--            <div class="col" id="realTypeTitle">부동산종류</div>-->
+<!--            <div class="col-8">-->
+<!--              <select id="realType" class="form-control form-control-sm" onchange="javascript:changeRealType();">-->
+<!--                <option value="RT001">아파트</option>-->
+<!--                <option value="RT002">주택(단독주택,다가구주택 등)</option>-->
+<!--                <option value="RT003">상가(점포,사무실,오피스텔)</option>-->
+<!--                <option value="RT004">농지</option>-->
+<!--                <option value="RT005">농지외</option>-->
+<!--              </select>-->
+<!--            </div>-->
+
+<!--            <div class="w-100"><h3></h3></div>-->
+
+<!--            <div class="col" id="money_title"><span id="moneySpan">거래금액</span></div>-->
+<!--            <div class="col-8">-->
+<!--              <input type="tel" id="money" class="form-control" placeholder="예) 100,000,000" data-v-max="99999999999" data-v-min="0" data-a-sign="원" data-p-sign="s" onchange="moneyCheck();">-->
+<!--            </div>-->
+<!--            <div class="w-100" ><h3></h3></div>-->
+<!--            <div class="col"></div>-->
+<!--            <div class="col-8">-->
+<!--              <input type="text" id="moneyText" style="color:gray; border:0; display:none;" readonly="true" />-->
+<!--            </div>-->
+
+<!--            <div class="w-100"><h3></h3></div>-->
+
+<!--              <div class="col" id="tax_title"><span id="taxSpan">시가표준액</span></div>-->
+<!--              <div class="col-8" id="tax_content">-->
+<!--                <input type="tel" id="tax" class="form-control" placeholder="예) 100,000,000" data-v-max="99999999999" data-v-min="0" data-a-sign="원" data-p-sign="s" onchange="taxCheck(this.val(), '');">-->
+<!--              </div>-->
+<!--              <div class="w-100" ><h3></h3></div>-->
+<!--              <div class="col"></div>-->
+<!--              <div class="col-8">-->
+<!--                <input type="text" id="taxText" style="color:gray; border:0; display:none;" readonly="true" />-->
+<!--              </div>-->
+
+<!--            <div class="w-100"><h3></h3></div>-->
+
+<!--            <div class="col" id="tax_title2"><span id="taxSpan2">시가표준액(토지분)</span></div>-->
+<!--            <div class="col-8" id="tax_content2">-->
+<!--              <input type="tel" id="tax2" class="form-control" placeholder="예) 100,000,000" data-v-max="99999999999" data-v-min="0" data-a-sign="원" data-p-sign="s" onchange="taxCheck(this.val(), '2');">-->
+<!--            </div>-->
+<!--            <div class="w-100" ><h3></h3></div>-->
+<!--            <div class="col"></div>-->
+<!--            <div class="col-8">-->
+<!--              <input type="text" id="tax2Text" style="color:gray; border:0; display:none;" readonly="true" />-->
+<!--            </div>-->
+
+<!--            <div class="w-100"><h3></h3></div>-->
+
+<!--              <div class="col" id="area_title">대상물건지역</div>-->
+<!--              <div class="col-8" id="area_content">-->
+<!--                <div class="custom-control custom-radio">-->
+<!--                  <input type="radio" id="areaRadio1" name="area" class="custom-control-input" value="0" checked>-->
+<!--                  <label class="custom-control-label" for="areaRadio1">서울특별시 및 광역시</label>-->
+<!--                </div>-->
+<!--                <div class="custom-control custom-radio">-->
+<!--                  <input type="radio" id="areaRadio2" name="area" class="custom-control-input" value="1">-->
+<!--                  <label class="custom-control-label" for="areaRadio2">그 밖의 지역</label>-->
+<!--                </div>-->
+<!--              </div>-->
+
+<!--            <div class="w-100"><h3></h3></div>-->
+
+<!--              <div class="col" id="del_cond_title">감면조항</div>-->
+<!--              <div class="col-8" id="del_cond_content">-->
+<!--                <div class="custom-control custom-radio">-->
+<!--                  <input type="radio" id="customRadio1" name="del_cond" class="custom-control-input" value="false" checked>-->
+<!--                  <label class="custom-control-label" for="customRadio1">전용면적 85제곱미터 이하</label>-->
+<!--                </div>-->
+<!--                <div class="custom-control custom-radio">-->
+<!--                  <input type="radio" id="customRadio2" name="del_cond" class="custom-control-input" value="true">-->
+<!--                  <label class="custom-control-label" for="customRadio2">전용면적 85제곱미터 초과</label>-->
+<!--                </div>-->
+<!--              </div>-->
+
+<!--            <div class="w-100"><h3></h3></div>-->
+
+<!--              <div class="col" id="own_house_title">보유주택수</div>-->
+<!--              <div class="col-8" id="own_house_content">-->
+<!--                <div class="custom-control custom-radio">-->
+<!--                  <input type="radio" id="customRadio3" name="own_house" class="custom-control-input" value="false" checked>-->
+<!--                  <label class="custom-control-label" for="customRadio3">4주택 미만</label>-->
+<!--                </div>-->
+<!--                <div class="custom-control custom-radio">-->
+<!--                  <input type="radio" id="customRadio4" name="own_house" class="custom-control-input" value="true">-->
+<!--                  <label class="custom-control-label" for="customRadio4">4주택 이상</label>-->
+<!--                </div>-->
+<!--              </div>-->
+
+<!--            <div class="w-100"><h3></h3></div>-->
+
+
+<!--              <div class="col" id="del_cond2_title">무주택자감면<br><font size="1" color="gray">(세대원포함)</font></div>-->
+<!--              <div class="col-8" id="del_cond2_content">-->
+<!--                <div class="custom-control custom-radio">-->
+<!--                  <input type="radio" id="customRadio5" name="del_cond2" class="custom-control-input" value="1">-->
+<!--                  <label class="custom-control-label" for="customRadio5">무주택</label>-->
+<!--                </div>-->
+<!--                <div class="custom-control custom-radio">-->
+<!--                  <input type="radio" id="customRadio6" name="del_cond2" class="custom-control-input" value="2" checked>-->
+<!--                  <label class="custom-control-label" for="customRadio6">1주택 이상</label>-->
+<!--                </div>-->
+<!--              </div>-->
+
+<!--            <div class="w-100"><h3></h3></div>-->
+
+
+<!--              <div class="col" id="bond_max_title">채권최고액</div>-->
+<!--              <div class="col-8" id="bond_max_content">-->
+<!--                <select class="form-control form-control-sm" id="bond_max">-->
+<!--                  <option value="100">100%</option>-->
+<!--                  <option value="110">110%</option>-->
+<!--                  <option value="120">120%</option>-->
+<!--                  <option value="130">130%</option>-->
+<!--                  <option value="140">140%</option>-->
+<!--                  <option value="150">150%</option>-->
+<!--                </select>-->
+<!--              </div>-->
+
+<!--            <div class="w-100"><h3></h3></div>-->
+
+<!--              <div class="col" id="square_title">필지수</div>-->
+<!--              <div class="col-8" id="square_content">-->
+<!--                <select class="form-control form-control-sm" id="square">-->
+<!--                  <option value="1">1필지</option>-->
+<!--                  <option value="2">2필지</option>-->
+<!--                  <option value="3">3필지</option>-->
+<!--                  <option value="4">4필지</option>-->
+<!--                  <option value="5">5필지</option>-->
+<!--                  <option value="6">6필지</option>-->
+<!--                  <option value="7">7필지</option>-->
+<!--                  <option value="8">8필지</option>-->
+<!--                  <option value="9">9필지</option>-->
+<!--                  <option value="10">10필지</option>-->
+<!--                </select>-->
+<!--              </div>-->
+
+<!--            <div class="w-100"><h3></h3></div>-->
+
+<!--              <div class="col" id="del_cond3_title">감면조항</div>-->
+<!--              <div class="col-8" id="del_cond3_content">-->
+<!--                <div class="custom-control custom-radio">-->
+<!--                  <input type="radio" id="customRadio7" name="del_cond3" class="custom-control-input" value="1" checked>-->
+<!--                  <label class="custom-control-label" for="customRadio7">농지원부2년이상보유</label>-->
+<!--                </div>-->
+<!--                <div class="custom-control custom-radio">-->
+<!--                  <input type="radio" id="customRadio8" name="del_cond3" class="custom-control-input" value="2">-->
+<!--                  <label class="custom-control-label" for="customRadio8">감면사항없음</label>-->
+<!--                </div>-->
+<!--              </div>-->
+
+<!--          </div>-->
           <p></p>
           <div class="text-center">
             <button type="button" class="btn btn-primary" onclick="javascript:doCalculate();">비용 계산</button>

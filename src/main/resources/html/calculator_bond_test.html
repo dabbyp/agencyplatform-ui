@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!--  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=medium-dpi">-->
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE10" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <!-- Bootstrap core CSS -->
+  <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!--구글등록-->
+  <meta name="google-site-verification" content="943vs5RmVFLIm58KOpipc_2L2iYEf9ZFbzcfeyji2YI" />
+  <!--네이버등록-->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="주택도시기금">
+  <meta property="og:description" content="주택도시기금 소개, 주택구입(내집마련디딤돌 등), 전세자금, 월세대출, 국민주택채권, 주택청약, 신혼부부대출">
+  <meta name="description" content="주택도시기금 소개, 주택구입(내집마련디딤돌 등), 전세자금, 월세대출, 국민주택채권, 주택청약, 신혼부부대출">
+  <meta property="og:image" content="http://nhuf.molit.go.kr/common/images/main/kakao.png">
+  <meta property="og:url" content="http://nhuf.molit.go.kr/">
+  <!--//네이버등록-->
+  <!--트위터등록-->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="주택도시기금">
+  <meta name="twitter:description" content="주택도시기금 소개, 주택구입(내집마련디딤돌 등), 전세자금, 월세대출, 국민주택채권, 주택청약, 신혼부부대출">
+  <meta name="twitter:image" content="http://nhuf.molit.go.kr/">
+  <meta name="twitter:domain" content="주택도시기금">
+  <!--//트위터등록-->
+  <link rel="canonical" href="http://nhuf.molit.go.kr/">
+
+  <link rel="stylesheet" href="../css/common/style.css">
+  <link rel="shortcut icon" type="image/x-icon" href="/common/images/32.ico">
+  <link rel="icon" type="image/x-icon" href="/common/images/32.png">
+  <link rel="apple-touch-icon" href="/common/images/128.png">
+  <link rel="apple-touch-icon-precomposed" href="/common/images/128.png" />
+  <!--
+  <script src="/common/js/jquery-1.10.2.min.js"></script>
+  <script src="/common/js/jquery.mobile-1.4.5.js"></script>
+  <script src="/common/js/jquery-ui.min.js"></script>
+  -->
+
+  <!-- Bootstrap core CSS -->
+  <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom styles for this template -->
+  <script src="../vendor/jquery/jquery.min.js"></script>
+
+</head>
+<body>
+    <!-- 본문 영역 -->
+    <div id="contArea">
+
+      <style type="text/css">
+		.inputArea, .resultArea { display: none; }
+	  </style>
+      <script type="text/javascript">
+		$(function() {
+			//$("#contents input[type=text]").keyup(function() { checkNum(this);}).css("text-align", "right").attr("maxlength", "18");
+			$("#q3_1, #q3_2").keyup(function() { setSum($("#q3_1"), $("#q3_2"), $("#q3_3")); });
+		});
+		var selectValue = "";
+		var areaText = {
+			"0": "서울특별시 및 광역시"
+			,"1" : "그 밖의 지역"
+		};
+		function setSelUse(t) {
+			$(".inputArea, .resultArea").hide();
+			$("#contents input[type=text]").val("");
+			$("#contents select:gt(0)").val("");
+			$(".resultTextArea").text("");
+			selectValue = "";
+			
+			var val = t.value;
+			if(val != "") {
+				$("#inputArea_"+val).show();
+				$("#resultArea_"+val).show();
+				selectValue = val;
+			}
+		}
+		function doSearch() {
+			if($("#selUse").val() == "" || selectValue == "") {
+				$("#selUse").focus();
+				alert("매입용도를 선택해주세요.");
+				return;
+			}
+			window["cal_"+selectValue]();
+		}
+		//부동산 소유권등기(주택, 아파트, 연립)
+		function cal_0() {
+			var q0_0 = $("#q0_0") ,q0_1 = $("#q0_1");
+			
+			var q0_0_val = q0_0.val();
+			if(q0_0_val == "") {
+				alert("대상물건 지역을 선택해주세요.");
+				q0_0.focus();
+				return;
+			}
+			var q0_1_num = Number(unNumberFormat($.trim(q0_1.val())));  
+			if(q0_1_num < 20000000) {
+				alert("시가표준액이 2천만원 미만입니다. 시가표준액 2천만원 이상부터 국민주택채권 매입대상입니다.");
+				q0_1.focus();
+				return;
+			}
+			var rate = 0;
+			var resultText = areaText[q0_0_val];
+			if(q0_1_num >= 20000000 && q0_1_num < 50000000) {
+				rate = 13 / 1000;
+				resultText += " 시가표준액 2천만원 이상 5천만원 미만";
+				resultText += " : 시가표준액의 13/1,000";
+			} else if(q0_1_num >= 50000000 && q0_1_num < 100000000) {
+				rate = q0_0_val == "0" ? 19 / 1000 : 14 / 1000;
+				resultText += " 시가표준액 5천만원 이상 1억원 미만";
+				resultText += " : 시가표준액의 " + (q0_0_val == "0" ? "19/1,000" : "14/1,000" );
+			} else if(q0_1_num >= 100000000 && q0_1_num < 160000000) {
+				rate = q0_0_val == "0" ? 21 / 1000 : 16 / 1000;
+				resultText += " 시가표준액 1억 이상 1억6천만원 미만";
+				resultText += " : 시가표준액의 " + (q0_0_val == "0" ? "21/1,000" : "16/1,000" );
+			} else if(q0_1_num >= 160000000 && q0_1_num < 260000000) {
+				rate = q0_0_val == "0" ? 23 / 1000 : 18 / 1000;
+				resultText += " 시가표준액 1억6천만원 이상 2억6천만원 미만";
+				resultText += " : 시가표준액의 " + (q0_0_val == "0" ? "23/1,000" : "18/1,000" );
+			} else if(q0_1_num >= 260000000 && q0_1_num < 600000000) {
+				rate = q0_0_val == "0" ? 26 / 1000 : 21 / 1000;
+				resultText += " 시가표준액 2억6천만원 이상 6억원 미만";
+				resultText += " : 시가표준액의 " + (q0_0_val == "0" ? "26/1,000" : "21/1,000" );
+			} else if(q0_1_num >= 600000000) {
+				rate = q0_0_val == "0" ? 31 / 1000 : 26 / 1000;
+				resultText += " 시가표준액 6억원 이상";
+				resultText += " : 시가표준액의 " + (q0_0_val == "0" ? "31/1,000" : "26/1,000" );
+			}
+			
+			$("#r0_0").text(numberFormat(""+(Math.round(q0_1_num * rate))) + " 원");
+			$("#r0_1").text(resultText);
+		}
+		//부동산 소유권등기(토지)
+		function cal_1() {
+			var q1_0 = $("#q1_0") ,q1_1 = $("#q1_1");
+			
+			var q1_0_val = q1_0.val();
+			if(q1_0_val == "") {
+				alert("대상물건 지역을 선택해주세요.");
+				q1_0.focus();
+				return;
+			}
+			var q1_1_num = Number(unNumberFormat($.trim(q1_1.val())));  
+			if(q1_1_num < 5000000) {
+				alert("시가표준액이 5백만원 미만입니다. 시가표준액 5백만원 이상부터 국민주택채권 매입대상입니다.");
+				q1_1.focus();
+				return;
+			}
+			var rate = 0;
+			var resultText = areaText[q1_0_val];
+			if(q1_1_num >= 5000000 && q1_1_num < 50000000) {
+				rate = q1_0_val == "0" ? 25 / 1000 : 20 / 1000;
+				resultText += " 시가표준액 5백만원 이상 5천만원 미만";
+				resultText += " : 시가표준액의 " + (q1_0_val == "0" ? "25/1,000" : "20/1,000" );
+			} else if(q1_1_num >= 50000000 && q1_1_num < 100000000) {
+				rate = q1_0_val == "0" ? 40 / 1000 : 35 / 1000;
+				resultText += " 시가표준액 5천만원 이상 1억원 미만";
+				resultText += " : 시가표준액의 " + (q1_0_val == "0" ? "40/1,000" : "35/1,000" );
+			} else if(q1_1_num >= 100000000) {
+				rate = q1_0_val == "0" ? 50 / 1000 : 45 / 1000;
+				resultText += " 시가표준액 1억원 이상";
+				resultText += " : 시가표준액의 " + (q1_0_val == "0" ? "50/1,000" : "45/1,000" );
+			}
+			$("#r1_0").text(numberFormat(""+(Math.round(q1_1_num * rate))) + " 원");
+			$("#r1_1").text(resultText);
+		}
+		//부동산 소유권등기(주택, 토지 外)
+		function cal_2() {
+			var q2_0 = $("#q2_0") ,q2_1 = $("#q2_1"), q2_2 = $("#q2_2");
+			
+			var q2_0_val = q2_0.val();
+			if(q2_0_val == "") {
+				alert("대상물건 지역을 선택해주세요.");
+				q2_0.focus();
+				return;
+			}
+			var q2_1_num = Number(unNumberFormat($.trim(q2_1.val())));  
+			var q2_2_num = Number(unNumberFormat($.trim(q2_2.val())));
+			
+            if(q2_1_num == 0) {			
+				alert("건물분 시가표준액은 필수 입력사항입니다.(1천만원 이상) 또는 매입용도를 확인해주세요");
+				q2_1.focus();
+				return;
+			} else if(q2_1_num > 0&& q2_1_num < 10000000 && q2_2_num > 0 && q2_2_num < 5000000) {
+				alert("건물 시가표준액이 1천만원 미만이고, 토지 시가표준액이 5백만원\n미만 입니다.\n건물 1천만원, 토지 5백만원 이상부터 국민주택채권 매입대상입니다.");
+				q2_1.focus();
+				return;
+			} else if( q2_1_num > 0 && q2_1_num < 10000000 && q2_2_num >= 0) {
+				alert("건물 시가표준액이 1천만원 미만입니다. 건물 시가표준액 1천만원 이상부터 국민주택채권 매입대상입니다.");
+				q2_1.focus();
+				return;
+			} else if(q2_1_num >= 10000000 && q2_2_num > 0 && q2_2_num < 5000000) {
+				alert("토지 시가표준액은 5백만원 이상부터 가능합니다.");
+				q2_2.focus();
+				return;
+			} 
+			
+			/*
+			if(q2_2_num  < 5000000) {
+				alert("토지분 시가표준금액을 5백만원 이상으로 입력하세요.");
+				q2_2.focus();
+				return;
+			}
+			*/
+			
+			var rate_1 = 0;
+			var resultText_1 = areaText[q2_0_val] + " 주택,토지 外 부동산 ";
+			if(q2_1_num >= 10000000 && q2_1_num < 130000000) {
+				rate_1 = q2_0_val == "0" ? 10 / 1000 : 8 / 1000;
+				resultText_1 += " 시가표준액 1천만원 이상 1억3천만원 미만";
+				resultText_1 += " : 시가표준액의 " + (q2_0_val == "0" ? "10/1,000" : "8/1,000" );
+			} else if(q2_1_num >= 130000000 && q2_1_num < 250000000) {
+				rate_1 = q2_0_val == "0" ? 16 / 1000 : 14 / 1000;
+				resultText_1 += " 시가표준액 1억3천만원 이상 2억5천만원 미만";
+				resultText_1 += " : 시가표준액의 " + (q2_0_val == "0" ? "16/1,000" : "14/1,000" );
+			} else if(q2_1_num >= 250000000) {
+				rate_1 = q2_0_val == "0" ? 20 / 1000 : 18 / 1000;
+				resultText_1 += " 시가표준액 2억5천만원 이상";
+				resultText_1 += " : 시가표준액의 " + (q2_0_val == "0" ? "20/1,000" : "18/1,000" );
+			}
+			var rate_2 = 0;
+			var resultText_2 = " 그리고 토지 ";
+			if(q2_2_num >= 5000000 && q2_2_num < 50000000) {
+				rate_2 = q2_0_val == "0" ? 25 / 1000 : 20 / 1000;
+				resultText_2 += " 시가표준액 5백만원 이상 5천만원 미만";
+				resultText_2 += " : 시가표준액의 " + (q2_0_val == "0" ? "25/1,000" : "20/1,000" );
+			} else if(q2_2_num >= 50000000 && q2_2_num < 100000000) {
+				rate_2 = q2_0_val == "0" ? 40 / 1000 : 35 / 1000;
+				resultText_2 += " 시가표준액 5천만원 이상 1억원 미만";
+				resultText_2 += " : 시가표준액의 " + (q2_0_val == "0" ? "40/1,000" : "35/1,000" );
+			} else if(q2_2_num >= 100000000) {
+				rate_2 = q2_0_val == "0" ? 50 / 1000 : 45 / 1000;
+				resultText_2 += " 시가표준액 1억원 이상";
+				resultText_2 += " : 시가표준액의 " + (q2_0_val == "0" ? "50/1,000" : "45/1,000" );
+			} else {
+				resultText_2 = "";
+			}
+			
+			var r2_0_num = Math.round(q2_1_num * rate_1);
+			var r2_1_num = Math.round(q2_2_num * rate_2);
+			var r2_2_num = r2_0_num + r2_1_num; 
+			$("#r2_0").text(numberFormat(""+r2_0_num) + " 원");
+			$("#r2_1").text(numberFormat(""+r2_1_num) + " 원");
+			$("#r2_2").text(numberFormat(""+r2_2_num) + " 원");
+			$("#r2_3").text(resultText_1 + resultText_2);
+		}
+		//부동산 등기(상속, 증여 및 무상취득)
+		function cal_3() {
+			// q3_0 : 대상물건지역
+			// q3_1 : 건물분 시가표준액
+			// q3_2 : 토지분 시가표준액
+			// q3_3 : 합산 시가표준액 
+			var q3_0 = $("#q3_0") ,q3_1 = $("#q3_1"), q3_2 = $("#q3_2"), q3_3 = $("#q3_3");
+			
+			var q3_0_val = q3_0.val();
+			if(q3_0_val == "") {
+				alert("대상물건 지역을 선택해주세요.");
+				q3_0.focus();
+				return;
+			}
+			var q3_1_num = Number(unNumberFormat($.trim(q3_1.val())));
+			var q3_2_num = Number(unNumberFormat($.trim(q3_2.val())));
+			
+			// 건물분 시가표준액 + 토지분 시가표준액
+			var q3_3_num = q3_1_num + q3_2_num; 
+			
+			if(q3_1_num > 0 && q3_1_num < 10000000 && q3_2_num > 0 && q3_2_num < 10000000) {
+				alert("건물 및 토지 시가표준액이 1천만원 미만입니다.\n건물 1천만원, 토지 1천만원 이상부터 국민주택채권 매입대상입니다.");
+				q3_1.focus();
+				return;
+			} else if( q3_1_num > 0 && q3_1_num < 10000000 && q3_2_num >= 0) {
+				alert("건물 시가표준액이 1천만원 미만입니다.\n건물 시가표준액 1천만원 이상부터 국민주택채권 매입대상입니다.");
+				q3_1.focus();
+				return;
+			} else if(q3_1_num >= 0 && q3_2_num > 0 && q3_2_num < 10000000) {
+				alert("토지 시가표준액이 1천만원 미만입니다.\n토지 시가표준액 1천만원 이상부터 국민주택채권 매입대상입니다.");
+				q3_2.focus();
+				return;
+			} 
+			
+			/*
+			if(q3_2_num < 10000000) {
+				alert("토지 시가표준액은 1천만원 이상부터 가능합니다.");
+				q3_2.focus();
+				return;
+			}			
+			*/
+			
+			var rate_1 = 0;
+			var resultText_1 = areaText[q3_0_val] + " 부동산 등기 (상속, 증여 및 무상 취득) ";
+			
+			if(q3_1_num >= 10000000 && q3_1_num < 50000000) {
+				rate_1 = q3_0_val == "0" ? 18 / 1000 : 14 / 1000;
+				resultText_1 += " 시가표준액 1천만원 이상 5천만원 미만";
+				resultText_1 += " : 시가표준액의 " + (q3_0_val == "0" ? "18/1,000" : "14/1,000" );
+			} else if(q3_1_num >= 50000000 && q3_1_num < 150000000) {
+				rate_1 = q3_0_val == "0" ? 28 / 1000 : 25 / 1000;
+				resultText_1 += " 시가표준액 5천만원 이상 1억5천만원 미만";
+				resultText_1 += " : 시가표준액의 " + (q3_0_val == "0" ? "28/1,000" : "25/1,000" );
+			} else if(q3_1_num >= 150000000) {
+				rate_1 = q3_0_val == "0" ? 42 / 1000 : 39 / 1000;
+				resultText_1 += " 시가표준액 1억5천만원 이상";
+				resultText_1 += " : 시가표준액의 " + (q3_0_val == "0" ? "42/1,000" : "39/1,000" );
+			}
+			
+			var rate_2 = 0;
+			var resultText_2 = " 그리고 토지 ";
+			
+			if(q3_2_num >= 10000000 && q3_2_num < 50000000) {
+				rate_2 = q3_0_val == "0" ? 18 / 1000 : 14 / 1000;
+				resultText_2 += " 시가표준액 1천만원 이상 5천만원 미만";
+				resultText_2 += " : 시가표준액의 " + (q3_0_val == "0" ? "18/1,000" : "14/1,000" );
+			} else if(q3_2_num >= 50000000 && q3_2_num < 150000000) {
+				rate_2 = q3_0_val == "0" ? 28 / 1000 : 25 / 1000;
+				resultText_2 += " 시가표준액 5천만원 이상 1억5천만원 미만";
+				resultText_2 += " : 시가표준액의 " + (q3_0_val == "0" ? "28/1,000" : "25/1,000" );
+			} else if(q3_2_num >= 150000000) {
+				rate_2 = q3_0_val == "0" ? 42 / 1000 : 39 / 1000;
+				resultText_2 += " 시가표준액 1억5천만원 이상";
+				resultText_2 += " : 시가표준액의 " + (q3_0_val == "0" ? "42/1,000" : "39/1,000" );
+			}
+			
+			var r2_0_num = Math.round(q3_1_num * rate_1);
+			var r2_1_num = Math.round(q3_2_num * rate_2);
+			var r2_2_num = r2_0_num + r2_1_num; 
+			
+			$("#r3_0").text(numberFormat(""+r2_0_num) + " 원");
+			$("#r3_1").text(numberFormat(""+r2_1_num) + " 원");
+			$("#r3_2").text(numberFormat(""+r2_2_num) + " 원");
+			$("#r3_3").text(resultText_1 + resultText_2);
+		}
+		//부동산 저당권설정이전
+		function cal_4() {
+			var q4_0 = $("#q4_0");
+			
+			var q4_0_num = Number(unNumberFormat($.trim(q4_0.val())));
+			if(q4_0_num < 20000000) {
+				alert("저당권 설정금액이 2천만원 미만입니다.\n저당권 설정금액 2천만원 이상부터 국민주택채권 매입대상입니다.");
+				q4_0.focus();
+				return;
+			}
+			
+			var rate = 10 /1000;
+			var resultText = "저당권설정금액 2천만원 이상 : 저당권 설정 금액의 10/ 1,000. 다만,매입금액이 10억원을 초과하는 경우에는 10억원으로 한다.";
+			
+			var r4_0 = Math.round(q4_0_num * rate);
+			if(r4_0 >= 1000000000) {
+				r4_0 = 1000000000;
+			}
+			$("#r4_0").text(numberFormat(""+r4_0) + " 원");
+			$("#r4_1").text(resultText);
+		}
+		//건축허가
+		function cal_5() {
+			var q5_0 = $("#q5_0"), q5_1 =  $("#q5_1");
+			
+			var q5_0_val = q5_0.val(); 
+			if(q5_0_val == "") {
+				alert("상세구분을 선택해주세요.");
+				q5_0.focus();
+				return;
+			}
+			var q5_1_num = Number(unNumberFormat($.trim(q5_1.val())));
+			if(q5_1_num == 0) {
+				alert("면적을 입력해주세요.");
+				q5_1.focus();
+				return;
+			}
+		
+			var rate = 0;
+			var resultText = "";
+			if(q5_0_val == "0" || q5_0_val == "1") {
+				resultText += "주거전용면적이 ";
+				if(q5_1_num < 100) {
+					rate = 300;
+					resultText += "국민주택규모초과 100제곱미터 미만인 경우 : 주거전용면적 제곱미터당 ";
+				} else if(q5_1_num >= 100 && q5_1_num < 132) {
+					rate = q5_0_val == "0" ? 1300 : 1000;
+					resultText += "100제곱미터이상 132제곱미터 미만인 경우  : 주거전용면적 제곱미터당 ";
+				} else if(q5_1_num >= 132 && q5_1_num < 165) {
+					rate = q5_0_val == "0" ? 2400 : 2000;
+					resultText += "132제곱미터이상 165제곱미터 미만인 경우  : 주거전용면적 제곱미터당 ";
+				} else if(q5_1_num >= 165 && q5_1_num < 231) {
+					rate = q5_0_val == "0" ? 5000 : 4000;
+					resultText += "165제곱미터이상 231제곱미터 미만인 경우  : 주거전용면적 제곱미터당 ";
+				} else if(q5_1_num >= 231 && q5_1_num < 330) {
+					rate = 10000;
+					resultText += "231제곱미터이상 330제곱미터 미만인 경우  : 주거전용면적 제곱미터당 ";
+				} else if(q5_1_num >= 330 && q5_1_num < 660) {
+					rate = 17000;
+					resultText += "330제곱미터이상 660제곱미터 미만인 경우  : 주거전용면적 제곱미터당 ";
+				} else if(q5_1_num >= 660) {
+					rate = 28000;
+					resultText += "660제곱미터이상인 경우  : 주거전용면적 제곱미터당 ";
+				}
+				resultText += numberFormat(""+rate)+"원";
+			} else if(q5_0_val == "2") {
+				rate = 4000;
+				resultText = "연면적당 ㎡당 4,000 원";
+			} else if(q5_0_val == "3") {
+				rate = 1300;
+				resultText = "연면적당 ㎡당 1,300 원";
+			} else if(q5_0_val == "4") {
+				rate = 1000;
+				resultText = "연면적당 ㎡당 1,000 원";
+			} else if(q5_0_val == "5") {
+				rate = 600;
+				resultText = "연면적당 ㎡당 600 원";
+			} else if(q5_0_val == "6") {
+				rate = 500;
+				resultText = "연면적당 ㎡당 500 원";
+			}
+			
+			
+			$("#r5_0").text(numberFormat(""+(q5_1_num * rate)) + " 원");
+			$("#r5_1").text(resultText);
+		}
+		//등록,면허,허가
+		function cal_6() {
+			var q6_0 = $("#q6_0"), q6_1 =  $("#q6_1");
+			
+			var q6_0_val = q6_0.val(); 
+			if(q6_0_val == "") {
+				alert("상세구분을 선택해주세요.");
+				q6_0.focus();
+				return;
+			}
+			var q6_1_num = Number(unNumberFormat($.trim(q6_1.val())));
+			if(q6_1_num == 0) {
+				alert("금액을 입력해주세요.");
+				q6_1.focus();
+				return;
+			}
+			if(q6_0_val == "5" && q6_1_num < 500000000) {
+				alert("금액을 5억 이상 입력해주세요.");
+				q6_1.focus();
+				return;
+			}
+			
+			var rate = 0;
+			var resultText = "";
+			$("#r6_3").hide();
+			if(q6_0_val == "0") {
+				rate = 2 / 1000;
+				resultText = "자본금의 2/1,000 자본금(법인인 경우에는 법인 등기사항증명서상의 납입자본금. 개인인 경우에는 자산평가액) 다만, 가. 또는 나. 업종 에 해당하는 자가 추가로 가. 또는 나. 업종을 등록하는 경우에는 기존 가. 또는  나. 업종 등록 당시의 자본금은 매입금액 산정 시 제외한다." ;
+				$("#r6_3").show();
+			} else if(q6_0_val == "1") {
+				rate = 20 / 100;
+				resultText = "면허수수료의 20/100";
+			} else if(q6_0_val == "2") {
+				rate = 5 / 1000;
+				resultText = "과세표준액의 5/1,000";
+			} else if(q6_0_val == "3") {
+				rate = 1 / 1000;
+				resultText = "자본금의 1/1,000 자본금(법인인 경우에는 법인 등기사항증명서상의 납입자본금. 개인인 경우에는 자산평가액) 다만, 가. 또는 나. 업종 에 해당하는 자가 추가로 가. 또는 나. 업종을 등록하는 경우에는 기존 가. 또는  나. 업종 등록 당시의 자본금은 매입금액 산정 시 제외한다.";
+				$("#r6_3").show();
+			} else if(q6_0_val == "4") {
+				rate = 5 / 100;
+				resultText = "점용료의 5/100";
+			} else if(q6_0_val == "5") {
+				rate = 1 / 1000;
+				resultText = "계약금액의 1/1,000";
+			}
+			$("#r6_0").text(numberFormat(""+(Math.round(q6_1_num * rate))) + " 원");
+			$("#r6_1").text(resultText);
+		}
+		//기타 등록, 면허, 허가
+		function cal_7() {
+			return;
+		}
+		
+		function setQ5_0(t) {
+			var val = t.value;
+			if(val == "") {
+				$("#q5_1_area").hide();
+			} else {
+				$("#q5_1_area").show();
+				if(val == "0" || val == "1") {
+					$("#q5_1_text").text("주거전용 면적");
+				} else {
+					$("#q5_1_text").text("연면적");
+				}
+			}
+			$("#q5_1").val("");
+		}
+		function setQ6_0(t) {
+			var val = t.value;
+			if(val == "") {
+				$("#q6_1_area").hide();
+			} else {
+				$("#q6_1_area").show();
+				var q6_1_text = "";
+				if(val == "0" || val == "3") {
+					q6_1_text = "자본금";
+				} else if(val == "1") {
+					q6_1_text = "면허수수료";
+				} else if(val == "2") {
+					q6_1_text = "과세표준액";
+				} else if(val == "4") {
+					q6_1_text = "점용료";
+				} else if(val == "5") {
+					q6_1_text = "계약금액";
+				}
+				$("#q6_1_text").text(q6_1_text);
+			}
+			$("#q6_1").val("");
+		}
+		function setSum(el1, el2, re) {
+			el1 = Number(unNumberFormat(el1.val()));
+			el2 = Number(unNumberFormat(el2.val()));
+			re.val(numberFormat(""+(el1 + el2)));
+		}
+	</script>
+        <h3 class="titType1">채권금액 계산하기</h3>
+<!--        <form method="post" action="" name="form">-->
+          <div id="contents" class="bondSchArea">
+            <ul>
+              <li><label for="selUse">매입용도</label>
+                <div><select id="selUse" onchange="setSelUse(this)" name="selUse">
+                  <option value="" selected="selected">선택하세요</option>
+                  <option value="0">부동산 소유권등기(주택, 아파트, 연립)</option>
+                  <option value="1">부동산 소유권등기(토지)</option>
+                  <option value="2">부동산 소유권등기(주택, 토지 外)</option>
+                  <option value="3">부동산 등기 (상속, 증여 및 무상취득)</option>
+                  <option value="4">부동산 저당권설정이전</option>
+                  <option value="5">건축허가</option>
+                  <option value="6">등록, 면허, 허가</option>
+                  <option value="7">기타 등록, 면허, 허가</option>
+                </select></div>
+              </li>
+            </ul>
+            <!-- 0 부동산 소유권등기(주택, 아파트, 연립) -->
+            <ul id="inputArea_0" class="inputArea">
+              <li><label for="q0_0">대상물건지역</label>
+                <div><select id="q0_0" name="q0_0">
+                  <option value="" selected="selected">선택하세요</option>
+                  <option value="0">서울특별시 및 광역시</option>
+                  <option value="1">그 밖의 지역</option>
+                </select></div>
+              </li>
+              <li><label for="q0_1">건물분 시가표준액</label>
+                <div><input id="q0_1" class="tr" maxlength="25" onkeypress="return onlyNumber();" onkeyup="checkNum(this);" onfocus="inputFocus(this);" onblur="inputBlur(this);" style="ime-mode: disabled" name="q0_1" type="text" /> 원<a title="아파트,연립,다세대(4층 이하) 등" class="btnSm" target="_blank" href="http://www.realtyprice.kr/notice/town/nfSiteLink.htm">공동주택가격열람</a>&nbsp;<a title="단독, 다가구(3층이하) 등" class="btnSm" target="_blank" href="http://www.realtyprice.kr/notice/hpindividual/siteLink.htm">단독주택가격열람</a>
+                  <ul class="listDash">
+                    <li>주택은 토지가 포함된 가격</li>
+                    <li>가격이 공시되지 않은 신규분양공동주택은 다음의 취득가격 기준<br><span>&nbsp;* 취득가격 = 분양가격+옵션비용-(분양가 및 옵션에 대한 부가세+선납할인)</span></li>
+                  </ul>
+                </div>
+              </li>
+            </ul>
+            <!-- 1 부동산 소유권등기(토지) -->
+            <ul id="inputArea_1" class="inputArea">
+              <li><label for="q1_0">대상물건지역</label>
+                <div><select id="q1_0" name="q1_0">
+                  <option value="" selected="selected">선택하세요</option>
+                  <option value="0">서울특별시 및 광역시</option>
+                  <option value="1">그 밖의 지역</option>
+                </select></div>
+              </li>
+              <li><label for="q1_1">토지분 시가표준액</label>
+                <div><input id="q1_1" class="tr" maxlength="25" onkeypress="return onlyNumber();" onkeyup="checkNum(this);" onfocus="inputFocus(this);" onblur="inputBlur(this);" style="ime-mode: disabled" name="q1_1" type="text" /> 원 <a title="토지가격열람" class="btnSm" target="_blank" href="http://www.realtyprice.kr/notice/gsindividual/siteLink.htm">토지가격열람</a>
+                  <ul class="listDash">
+                    <li>개별공시지가 x 해당면적(m²)</li>
+                  </ul>
+                </div>
+              </li>
+            </ul>
+            <!-- 2 부동산 소유권등기(주택, 토지 外) -->
+            <ul id="inputArea_2" class="inputArea">
+              <li><label for="q2_0">대상물건지역</label>
+                <div><select id="q2_0" name="q2_0">
+                  <option value="" selected="selected">선택하세요</option>
+                  <option value="0">서울특별시 및 광역시</option>
+                  <option value="1">그 밖의 지역</option>
+                </select></div>
+              </li>
+              <li><label for="q2_1">건물분 시가표준액</label>
+                <div><input id="q2_1" class="tr" maxlength="25" onkeypress="return onlyNumber();" onkeyup="checkNum(this);" onfocus="inputFocus(this);" onblur="inputBlur(this);" style="ime-mode: disabled" name="q2_1" type="text" /> 원<a title="오피스텔,상가 등" class="btnSm" target="_blank" href="https://etax.seoul.go.kr/jsp/BldnStndAmtLstAction.view?gnb_id=0709&lnb_id=0709&gl_gubun=l">단독/공동주택 외(서울)</a>&nbsp;<a title="오피스텔,상가 등" class="btnSm" target="_blank" href="https://www.wetax.go.kr/main/?cmd=LPTINB1R0#">단독/공동주택 외(서울 외)</a></div>
+              </li>
+              <li><label for="q2_2">토지분 시가표준액</label>
+                <div><input id="q2_2" class="tr" maxlength="25" onkeypress="return onlyNumber();" onkeyup="checkNum(this);" onfocus="inputFocus(this);" onblur="inputBlur(this);" style="ime-mode: disabled" name="q2_2" type="text" /> 원<a title="토지가격열람" class="btnSm" target="_blank" href="http://www.realtyprice.kr/notice/gsindividual/siteLink.htm">토지가격열람</a>
+                  <ul class="listDash">
+                    <li>개별공시지가 x 해당면적(m²)</li>
+                  </ul>
+                </div>
+              </li>
+            </ul>
+            <!-- 3 부동산 등기 (상속,증여 및 무상취득) -->
+            <ul id="inputArea_3" class="inputArea">
+              <li><label for="q3_0">대상물건지역</label>
+                <div><select id="q3_0" name="q3_0">
+                  <option value="" selected="selected">선택하세요</option>
+                  <option value="0">서울특별시 및 광역시</option>
+                  <option value="1">그 밖의 지역</option>
+                </select></div>
+              </li>
+              <li><label for="q3_1">건물분 시가표준액</label>
+                <div><input id="q3_1" class="tr" maxlength="25" onkeypress="return onlyNumber();" onkeyup="checkNum(this);" onfocus="inputFocus(this);" onblur="inputBlur(this);" style="ime-mode: disabled" name="q3_1" type="text" /> 원
+                  <div style="margin-top: 10px"><a title="아파트,연립,다세대(4층 이하) 등" class="btnSm" target="_blank" href="http://www.realtyprice.kr/notice/town/nfSiteLink.htm">공동주택가격열람</a>&nbsp;<a title="단독, 다가구(3층이하) 등" class="btnSm" target="_blank" href="http://www.realtyprice.kr/notice/hpindividual/siteLink.htm">단독주택가격열람</a>&nbsp;<a title="오피스텔,상가 등" class="btnSm" target="_blank" href="https://etax.seoul.go.kr/jsp/BldnStndAmtLstAction.view?gnb_id=0709&lnb_id=0709&gl_gubun=l">단독/공동주택 외(서울)</a>&nbsp;<a title="오피스텔,상가 등" class="btnSm" target="_blank" href="https://www.wetax.go.kr/main/?cmd=LPTINB1R0#">단독/공동주택 외(서울 외)</a></div>
+                  <ul class="listDash">
+                    <li>개별공시지가 x 해당면적(m²)</li>
+                    <li>주택은 토지가 포함된 가격</li>
+                  </ul>
+                </div>
+              </li>
+              <li><label for="q3_2">토지분 시가표준액</label>
+                <div><input id="q3_2" class="tr" maxlength="25" onkeypress="return onlyNumber();" onkeyup="checkNum(this);" onfocus="inputFocus(this);" onblur="inputBlur(this);" style="ime-mode: disabled" name="q3_2" type="text" /> 원  <a title="토지가격열람" class="btnSm" target="_blank" href="http://www.realtyprice.kr/notice/gsindividual/siteLink.htm">토지가격열람</a>
+                  <ul class="listDash">
+                    <li>주택인 경우 미입력</li>
+                  </ul>
+                </div>
+              </li>
+              <li><label for="q3_3">합산 시가표준액</label>
+                <div><input id="q3_3" title="합산 시가표준액 입력" class="tr" readonly="readonly" name="q3_3" type="text" /> 원</div>
+              </li>
+            </ul>
+            <!-- 4 부동산 저당권설정이전 -->
+            <ul id="inputArea_4" class="inputArea">
+              <li><label for="q4_0">저당권 설정금액</label>
+                <div><input id="q4_0" class="tr" maxlength="25" onkeypress="return onlyNumber();" onkeyup="checkNum(this);" onfocus="inputFocus(this);" onblur="inputBlur(this);" style="ime-mode: disabled" name="q4_0" type="text" /> 원</div>
+              </li>
+            </ul>
+            <!-- 5 건축허가 -->
+            <ul id="inputArea_5" class="inputArea">
+              <li><label for="q5_0">상세구분</label>
+                <div><select id="q5_0" onchange="setQ5_0(this)" name="q5_0">
+                  <option value="" selected="selected">선택하세요</option>
+                  <option value="0">주거전용(단독)</option>
+                  <option value="1">주거전용(공동)</option>
+                  <option value="2">주거전용외(영화관, 유흥주점, 유기장 등)</option>
+                  <option value="3">주거전용외(기타 철근, 철골조)</option>
+                  <option value="4">주거전용외(연와조, 석조)</option>
+                  <option value="5">주거전용외(시멘트, 벽돌 및 블록조)</option>
+                  <option value="6">관광진흥법상 관광숙박시설</option>
+                </select></div>
+              </li>
+              <li id="q5_1_area" class="inputArea"><label for="q5_1">면적</label>
+                <div><input id="q5_1" class="tr" maxlength="25" onkeypress="return onlyNumberWithDecimal(event);" onkeyup="removeHangle(this);" onfocus="inputFocus(this);" onblur="inputBlur(this);" style="ime-mode: disabled" name="q5_1" type="text" /> ㎡</div>
+              </li>
+            </ul>
+            <!-- 6 등록,면허,허가 -->
+            <ul id="inputArea_6" class="inputArea">
+              <li><label for="q6_0">상세구분</label>
+                <div><select id="q6_0" onchange="setQ6_0(this)" name="q6_0">
+                  <option value="" selected="selected">선택하세요</option>
+                  <option value="0">건설업, 주택건설사업 및 주택관리업등록(갱신은 제외)</option>
+                  <option value="1">공유수면매립면허</option>
+                  <option value="2">건설기계 신규등록</option>
+                  <option value="3">정보통신공사업, 전기공사업 및 소방시설공사업 등록(갱신은 제외)</option>
+                  <option value="4">토석, 모래, 자갈의 채취허가</option>
+                  <option value="5">국가, 지방자치단체등 공사도급계약</option>
+                </select></div>
+              </li>
+              <li id="q6_1_area" class="inputArea"><label for="q6_1">매입금액</label>
+                <div><input id="q6_1" class="tr" maxlength="25" onkeypress="return onlyNumber();" onkeyup="checkNum(this);" onfocus="inputFocus(this);" onblur="inputBlur(this);" style="ime-mode: disabled" name="q6_1" type="text" /> 원</div>
+              </li>
+            </ul>
+          </div>
+          <div class="tr"><a class="btnMd blue" onclick="javascript:doSearch()" href="#none">채권매입(발행)금액조회</a></div>
+<!--        </form>-->
+        <!-- 0 부동산 소유권등기(주택, 아파트, 연립)의 매입금액 -->
+        <div id="resultArea_0" class="resultArea">
+          <div class="tableStyle03" style="margin-bottom: 10px">
+            <table>
+              <caption>부동산 소유권등기(주택, 아파트, 연립) 매입용도의 채권매입금액, 매입기준</caption><colgroup><col style="width: 20%" /><col style="width: 80%" /></colgroup>
+              <tbody>
+              <tr>
+                <th scope="row">채권매입금액</th>
+                <td><em id="r0_0"></em></td>
+              </tr>
+              <tr>
+                <th scope="row">매입기준</th>
+                <td><em id="r0_1"></em></td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <ul>
+            <li class="ex">
+              <ul class="btTxt">
+                <li class="blue">5천원 미만은 절사, 5천원 이상은 올림하여 1만원 단위로 채권매입</li>
+              </ul>
+              <h4 class="titType3">시가표준액 추가 확인방법</h4>
+              <ul class="listBulDot">
+                <li>등록세 영수필확인서(등기소보관용)에서 다음의 시가표준액을 확인할 수 있습니다.
+                  <ul>
+                    <li>주택시가표준액 : 주택은 토지가 포함된 가격</li>
+                    <li>건물시가표준액 : 주택이 아닌 상가, 공장, 오피스텔 등을 말함</li>
+                    <li>토지시가표준액</li>
+                  </ul>
+                </li>
+                <li>시가표준액 관련 사항은 관할구청으로 문의하시기 바랍니다.</li>
+              </ul>
+            </li>
+            <!--
+            <li class="ex">
+                <ul class="btTxt">
+                    <li class="blue"><a target="_blank" href="/FP/FP08/FP0808/FP080801.jsp?id=11&amp;mode=S&amp;currentPage=1&amp;articleId=480">제1종국민주택채권 매입대상 및 금액표 확인하기</a></li>
+                    <li class="blue"><a target="_blank" href="/FP/FP08/FP0808/FP080801.jsp?id=11&amp;mode=S&amp;currentPage=1&amp;articleId=479">제1종국민주택채권 매입대상자 및 매입기준 확인하기</a></li>
+                </ul>
+            </li>
+            -->
+          </ul>
+        </div>
+
+</div>
+</body>
+</html>

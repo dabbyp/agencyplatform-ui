@@ -1,0 +1,121 @@
+@charset "utf-8";
+/* tableStyle01 : td 중앙 정렬 구조 */
+.tableStyle01 {margin-bottom:40px; border-top:2px solid #5a4f4a; border-bottom:1px solid #acacac;}
+.tableStyle01 table {width:100%; border-right:1px solid #d8d8d8; border-collapse:collapse;}
+.tableStyle01 table tr th {height:19px; line-height:160%; padding:11px 0 12px; border-left:1px solid #d8d8d8; border-top:1px solid #d8d8d8; text-align:center; vertical-align:middle;}
+.tableStyle01 table tr td {height:19px; line-height:160%; border:1px solid #d8d8d8; border-width:1px 0 0 1px; color:#4d4d4d; vertical-align:middle;}
+.tableStyle01 table thead tr th {border-top:none; background:#ebeef5; color:#333;}
+.tableStyle01 table tbody tr th,
+.tableStyle01 table tfoot tr th {padding-left:16px !important; padding-right:16px !important; border-left:1px solid #d8d8d8; background:#f9f9f9; color:#333; font-weight:bold;}
+.tableStyle01 table tbody tr td,
+.tableStyle01 table tfoot tr td {padding:10px 0 13px; text-align:center; color:#4d4d4d;}
+.tableStyle01 table tbody tr:first-child th,
+.tableStyle01 table tbody tr:first-child td {border-top:1px solid #9b928d;}
+.tableStyle01 + .btTxt,
+.tableScroll + .btTxt {margin-top:-38px;}
+.tableStyle02 + .btTxt {margin-top:-11px;}
+
+/* tableStyle02 : td 왼쪽 정렬 구조 */
+.tableStyle02 {margin-bottom:40px; border-top:2px solid #5a4f4a; border-bottom:1px solid #acacac;}
+.tableStyle02 table {width:100%; border-right:1px solid #d8d8d8; border-collapse:collapse;}
+.tableStyle02 table tr th {height:19px; line-height:160%; padding:11px 0 12px; border:1px solid #d8d8d8; border-width:1px 0 0 1px; text-align:center; vertical-align:middle;}
+.tableStyle02 table tr td {height:19px; line-height:160%; border:1px solid #d8d8d8; border-width:1px 0 0 1px; color:#4d4d4d; vertical-align:middle;}
+.tableStyle02 table thead tr th {border-top:none; background:#ebeef5; color:#333;}
+.tableStyle02 table tbody tr th {line-height:160%; background:#fafafa; color:#666;}
+.tableStyle02 table tbody tr td {padding:10px 16px 13px; text-align:left;}
+.tableStyle02 table tbody tr:first-child th,
+.tableStyle02 table tbody tr:first-child td {border-top:1px solid #9b928d;}
+
+/* tableStyle03 : layout table 구조 */
+.tableStyle03 {margin-bottom:40px; border-top:2px solid #5a4f4a; border-bottom:1px solid #acacac;}
+.tableStyle03 table {width:100%; border-right:1px solid #d8d8d8;}
+.tableStyle03 table tr th {height:18px; line-height:160%; padding:11px 0 13px; border:1px solid #d8d8d8; border-width:1px 0 0 1px; background:#ebeef5; color:#333; font-weight:bold; vertical-align:middle;}
+.tableStyle03 table tr:first-child th {border-top:none !important;}
+.tableStyle03 table tr td.tRow {line-height:160%; padding:11px 0 13px; background:#ebeef5; color:#333; font-weight:bold; text-align:center; vertical-align:middle;}
+.tableStyle03 table tr td {height:18px; line-height:160%; padding:11px 16px 13px; border:1px solid #d8d8d8; border-width:1px 0 0 1px; color:#4d4d4d; text-align:left; vertical-align:middle;}
+.tableStyle03 table tr:first-child td {border-top:none;}
+
+/* common */
+.ie10 .tableStyle01 table, .ie10 .tableStyle02 table {border-collapse:separate;}
+.tableScroll {margin-bottom:40px;}
+.tableScroll > .tableStyle01,
+.tableScroll > .tableStyle002 {margin-bottom:0;}
+.tableScroll + .btnArea02 {margin-top:-20px;}
+.tableScroll + .btnArea04 {margin-top:-20px;}
+.tableScroll + .titType2 {margin-top:-31px;}
+.tableScroll + .listBulDot {margin-top:-33px;}
+.tableScroll + .ex {margin-top:-33px;}
+
+table thead tr.depth th {border-top:1px solid #acacac;}
+table tbody tr.noDate td {padding:30px 0 !important; text-align:center;} /* 검색내용 없음 */
+p.noDate {padding:30px 0 !important; text-align:center; border-top:1px solid #d8d8d8;}
+
+table tr td.vt {vertical-align:top;} /* 상단 정렬 */
+table tr th.tl, table tr td.tl {padding-left:16px !important; padding-right:16px !important; text-align:left !important;} /* 왼쪽 정렬 */
+table tr td.tr {padding-left:16px !important; padding-right:16px !important; text-align:right;} /* 오른쪽 정렬 */
+table tr td.tc {padding-left:0 !important; padding-right:0 !important; text-align:center !important;} /* 중앙 정렬 */
+
+table tr td .tit {margin:8px 0 4px;}
+table tr td .tit:first-child {margin-top:0;}
+table tr td .txtList {overflow:hidden;}
+table tr td .txtList > li {padding-left:10px; background:url('/common/images/common/bul/blt_dot2.png') no-repeat 0 8px;}
+table tr td ol.txtList > li {padding-left:16px; background:none; text-indent:-16px;}
+
+table tr td a {color:#3154af; text-decoration:underline;}
+
+table tr label {display:inline-block; vertical-align:middle;}
+table tr select, table tr input {margin-bottom:1px; vertical-align:middle;}
+table td > button, table td > a {vertical-align:middle !important;}
+
+.tbTop {overflow:hidden; min-height:14px; margin-bottom:6px; padding-bottom:2px;} /* 테이블 상단 텍스트 */
+.tbTop span {float:right;}
+
+/* ie7 */
+html.ie7 .tableStyle01 table thead tr th, html.ie7 .tableStyle02 table thead tr th,
+html.ie7 .tableStyle01 table tbody tr th, html.ie7 .tableStyle01 table tbody tr td,
+html.ie7 .tableStyle02 table tbody tr th, html.ie7 .tableStyle02 table tbody tr td,
+html.ie7 .tableStyle03 table tr td.tRow, html.ie7 .tableStyle03 table tr td {height:17px; padding-top:11px; padding-bottom:12px;}
+
+/* ie8 */
+html.ie8 .tableStyle01 table thead tr th,
+html.ie8 .tableStyle02 table thead tr th {height:17px; padding-top:12px; padding-bottom:11px;}
+html.ie8 .tableStyle01 table tbody tr th,
+html.ie8 .tableStyle01 table tbody tr td,
+html.ie8 .tableStyle02 table tbody tr th,
+html.ie8 .tableStyle02 table tbody tr td {height:19px; padding-top:12px; padding-bottom:11px;}
+html.ie8 .tableStyle03 table tr td.tRow,
+html.ie8 .tableStyle03 table tr td {height:17px; padding-top:11px; padding-bottom:12px;}
+
+/* 파이어폭스 */
+@-moz-document url-prefix() {
+	.tableStyle01 table thead tr th,
+	.tableStyle02 table thead tr th {height:21px; padding-top:9px; padding-bottom:12px;}
+	.tableStyle03 table tr td.tRow, .tableStyle03 table tr td {padding-top:10px; padding-bottom:14px; height:17px;}
+}
+
+/* 크롬 */
+@media only screen and (-webkit-min-device-pixel-ratio:0) {
+	.tableStyle01 table thead tr th, .tableStyle01 table tbody tr th, .tableStyle01 table tbody tr td,
+	.tableStyle02 table thead tr th, .tableStyle02 table tbody tr th, .tableStyle03 table tr td.tRow {padding:11px 3px 12px; height:18px;}
+	.tableStyle02 table tbody tr td, .tableStyle03 table tr td {padding:11px 16px 12px; height:18px;}
+}
+
+@media only screen and (max-width:850px) {
+	.tableScroll {overflow-x:auto; margin-bottom:20px;}
+	.tableScroll .tableStyle01,
+	.tableScroll .tableStyle02,
+	.tableScroll .tableStyle03 {width:768px; margin-bottom:0;}
+	.tableScroll + .btTxt {margin-top:-17px;}
+	.tableScroll + .titType2 {margin-top:-11px;}
+	.tableScroll + .listBulDot {margin-top:-11px;}
+	.tableScroll + .btnArea02 {margin-top:-10px;}
+	.tableScroll + .btnArea04 {margin-top:-10px;}
+}
+
+@media only screen and (min-width:728px) and (max-width:850px) {
+	.tableStyle01 table thead tr th,
+	.tableStyle01 table tbody tr th,
+	.tableStyle01 table tbody tr td {padding-left:8px; padding-right:8px;}
+
+	.tableScroll + .btTxt {margin-top:-17px;}
+}

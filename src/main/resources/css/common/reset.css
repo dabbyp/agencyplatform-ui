@@ -1,0 +1,64 @@
+@charset "utf-8";
+
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+abbr, address, cite, code,
+del, dfn, em, img, ins, kbd, q, samp,
+small, strong, var,
+b, i,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section, summary,
+time, mark, audio, video {margin:0; padding:0; border:0; font-size:100%; font-family:"맑은 고딕", "돋움", Dotum, AppleSDGothicNeo ,Droid Sans, arial, sans-serif; vertical-align:baseline; background:transparent; list-style:none;} /*font-size:100%*/
+body {line-height:1; -webkit-text-size-adjust:none; font-family:"맑은 고딕", "돋움", Dotum, AppleSDGothicNeo ,Droid Sans, arial, sans-serif; color:#4d4d4d; font-size:10px;}
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {display:block;}
+fieldset, img, abbr, acronym {border:0;}
+ol, ul {list-style:none;}
+table {table-layout:fixed; border-collapse:collapse; border-spacing:0; border:0;}
+legend, caption {font-size:0; overflow:hidden; text-indent:-9999999px; height:0; width:0; line-height:0;}
+td,th {word-break:break-all}
+ins {text-decoration:none;}
+del {text-decoration:line-through;}
+sub, sup {margin:0; padding:0;}
+blockquote:before, blockquote:after, q:before, q:after {content:"";}
+blockquote,q {quotes:"" "";}
+hr {overflow:hidden; position:absolute; left:-9999em; top:0; width:0; height:0; font-size:0; line-height:0; /*visibility:hidden; */}
+input {vertical-align:middle;}
+select {min-width:102px; padding:2px 2px 2px 0; border:1px solid #c5c5c5; border-radius:0 !important; background:#fff !important; font-size:10px; color:#666; font-family:"맑은 고딕"; vertical-align:middle;}
+
+textarea {padding:1%; border:1px solid #e5e5e5; font-family:"맑은 고딕", "돋움", Dotum, AppleSDGothicNeo ,Droid Sans, arial, sans-serif; color:#4d4d4d; resize:none;}
+em {font-style:normal;}
+a, a:link, a:visited, a:active {text-decoration:none; color:#4d4d4d;}
+a:hover {text-decoration:none; color:#333;}
+
+input[type="button"], button {margin:0; padding:0; border:0; border-radius:0 !important; -webkit-border-radius:1px !important; -webkit-appearance:none !important; cursor:pointer; font-family:"맑은 고딕", "돋움", Dotum, AppleSDGothicNeo ,Droid Sans, arial, sans-serif;}
+button, input[type="reset"], input[type="button"], input[type="submit"] {line-height:normal; border:none;}
+
+/*input[type="text"]::-ms-clear {display:none !important;}*/
+input[type="text"],
+input[type="password"],
+input[type="tel"]
+/*input[type="tel"] {height:18px; padding:2px 0 0; border:1px solid #c5c5c5; border-radius:0 !important; -webkit-appearance:none !important; background:#fff; font-family:"맑은 고딕", "돋움", Dotum, AppleSDGothicNeo ,Droid Sans, arial, sans-serif; font-size:12px; color:#4d4d4d; text-indent:5px !important; outline:none;}*/
+.ie7 input[type="text"], .ie7 input[type="password"], .ie7 input[type="tel"] {text-indent:0 !important;}
+.ie8 input[type="text"], .ie8 input[type="password"], .ie8 input[type="tel"] {padding:2px 0 0;}
+input[type="file"] {line-height:1; padding:6px 10px 7px; border:1px solid #e5e5e5; background:#fff; font-family:"맑은 고딕", "돋움", Dotum, AppleSDGothicNeo ,Droid Sans, arial, sans-serif; font-size:10px; color:#4d4d4d; cursor:pointer; outline:none;}
+.ie9 input[type="file"], .ie10 input[type="file"], .ie11 input[type="file"] {padding:6px 0 7px; border:none;}
+
+input[type="checkbox"],
+input[type="radio"] {margin:0 6px 0 0; padding:0;}
+.ie7 input[type="radio"] {margin:0 6px 0 0; padding:0;}
+input[type="checkbox"] + label {line-height:120%;}
+input[type="checkbox"]:checked + label,
+input[type="radio"]:checked + label {color:#c8212f !important;}
+input[type="checkbox"]:disabled + label,
+input[type="radio"]:disabled + label {color:#999 !important;}
+
+input:disabled, input:readonly {background:#f1f1f1;}
+input[readonly="readonly"], input[readonly],
+input[disabled="disabled"], input[disabled] {line-height:15px !important; height:15px !important; border:1px solid #e5e5e5; background:#f1f1f1; color:#4d4d4d; text-indent:10px !important;}
+select[disabled] {border:1px solid #e5e5e5; background-color:#f1f1f1; color:#f1f1f1;}
+
+.ie7 input[type="button"], .ie7 button {overflow:visible;}
