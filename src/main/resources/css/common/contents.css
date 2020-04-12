@@ -32,7 +32,7 @@
 .bondSchArea > ul > li input.bondNum + a {margin:0;}
 .bondSchArea > ul > li input.tr {width:200px;padding:2px 10px 0 0;}
 .bondSchArea > ul > li input.tr + a {margin-left:20px;}
-.bondSchArea > ul > li select {width:390px;height:27px;}
+.bondSchArea > ul > li select {width:90%;height:27px;}
 .bondSchArea > ul > li .listDash {margin:10px 0 0 0;line-height:120%;}
 .bondSchArea + .tr {margin:-15px 0 35px;}
 .resultArea em {color:#355595;font-weight:bold;}
@@ -93,3 +93,4 @@
 	.bondSchArea + .tr .btnMd {width:100%;}
 
 }
+

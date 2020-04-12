@@ -4,7 +4,7 @@
         ,"1" : "그 밖의 지역"
     };
 
-    function setSelUse(t) {
+    function setDeungGi(t) {
         // div class가 inputArea, resultArea로 지정된 것들을 hide
         $(".inputArea, .resultArea").hide();
         // div id가 contents로 지정된 것들 중 text type 인 것들의 값을 ""로 설정
@@ -14,103 +14,76 @@
         //$(".resultTextArea").text("");
         selectValue = "";
 
-        var val = t.value;
-        if(val != "") {
+        var deungGi = t.value;
+        if(deungGi != "") {
             // ul id가 inputArea_0으로 지정된 것들을 show
-            $("#inputArea_"+val).show();
-            $("#resultArea_"+val).show();
-            selectValue = val;
+            //$("#inputArea_"+val).show();
+            //$("#resultArea_"+val).show();
+            $("#inputArea_0").show();
+            $("#resultArea_0").show();
+
+            selectValue = deungGi;
         }
+
+        // 소유권이전
+        if(deungGi == "DG001"){
+          var realTypeHtml = new Array();
+          realTypeHtml.push("<option value='' selected='selected'>선택하세요</option>");
+          realTypeHtml.push("<option value='RT001'>아파트</option>");
+          realTypeHtml.push("<option value='RT002'>주택(단독주택, 다가구주택 등)</option>");
+          realTypeHtml.push("<option value='RT003'>상가(점포,사무실,오피스텔)</option>");
+          realTypeHtml.push("<option value='RT004'>농지</option>");
+          realTypeHtml.push("<option value='RT005'>농지외</option>");
+          $("#realType").html(realTypeHtml.join(""));
+        }
+
+        // 전세권 설정
+        if(deungGi == "DG002"){
+          var realTypeHtml = new Array();
+          realTypeHtml.push("<option value='' selected='selected'>선택하세요</option>");
+          realTypeHtml.push("<option value='RT001'>아파트, 주택, 상가</option>");
+          $("#realType").html(realTypeHtml.join(""));
+        }
+
+        // 근저당권 설정
+        if(deungGi == "DG003"){
+          var realTypeHtml = new Array();
+          realTypeHtml.push("<option value='' selected='selected'>선택하세요</option>");
+          realTypeHtml.push("<option value='RT001'>아파트</option>");
+          realTypeHtml.push("<option value='RT002'>주택(단독주택, 다가구주택 등)</option>");
+          realTypeHtml.push("<option value='RT003'>상가(점포,사무실,오피스텔)</option>");
+          realTypeHtml.push("<option value='RT004'>농지</option>");
+          realTypeHtml.push("<option value='RT005'>농지외</option>");
+          $("#realType").html(realTypeHtml.join(""));
+        }
+
+        // 증여등기
+        if(deungGi == "DG004"){
+          var realTypeHtml = new Array();
+          realTypeHtml.push("<option value='' selected='selected'>선택하세요</option>");
+          realTypeHtml.push("<option value='RT001'>아파트</option>");
+          realTypeHtml.push("<option value='RT002'>주택(단독주택, 다가구주택 등)</option>");
+          realTypeHtml.push("<option value='RT003'>상가(점포,사무실,오피스텔)</option>");
+          realTypeHtml.push("<option value='RT004'>농지</option>");
+          realTypeHtml.push("<option value='RT005'>농지외</option>");
+          $("#realType").html(realTypeHtml.join(""));
+        }
+
+        // 상속등기
+        if(deungGi == "DG005"){
+          var realTypeHtml = new Array();
+          realTypeHtml.push("<option value='' selected='selected'>선택하세요</option>");
+          realTypeHtml.push("<option value='RT001'>아파트</option>");
+          realTypeHtml.push("<option value='RT002'>주택(단독주택, 다가구주택 등)</option>");
+          realTypeHtml.push("<option value='RT003'>상가(점포,사무실,오피스텔)</option>");
+          realTypeHtml.push("<option value='RT004'>농지</option>");
+          realTypeHtml.push("<option value='RT005'>농지외</option>");
+          $("#realType").html(realTypeHtml.join(""));
+        }
+
+        hideAll();
+        $("#li_0").show();
     }
-
-  function changeDeungGi(){
-    hideAll();
-    var deungGi = $("#deungGi").val();
-
-    // 소유권이전
-    if(deungGi == "DG001"){
-      var realTypeHtml = new Array();
-      realTypeHtml.push("<option value='RT001'>아파트</option>");
-      realTypeHtml.push("<option value='RT002'>주택(단독주택, 다가구주택 등)</option>");
-      realTypeHtml.push("<option value='RT003'>상가(점포,사무실,오피스텔)</option>");
-      realTypeHtml.push("<option value='RT004'>농지</option>");
-      realTypeHtml.push("<option value='RT005'>농지외</option>");
-
-      $("#realType").html(realTypeHtml.join(""));
-      $("#moneySpan").text("거래금액");
-      $("#moneySpan").show();$("#money").show();$("#moneyText").show();
-
-      $("#own_house_title").show();$("#own_house_content").show();
-      $("#del_cond_title").show();$("#del_cond_content").show();
-      $("#tax_title").show();$("#tax_content").show();$("#taxText").show();
-      $("#area_title").show();$("#area_content").show();
-    }
-
-    // 전세권 설정
-    if(deungGi == "DG002"){
-      var realTypeHtml = new Array();
-      realTypeHtml.push("<option value='RT001'>아파트, 주택, 상가</option>");
-
-      $("#realType").html(realTypeHtml.join(""));
-
-      $("#moneySpan").text("전세보증금");
-      $("#moneySpan").show();$("#money").show();$("#moneyText").show();
-    }
-
-    // 근저당권 설정
-    if(deungGi == "DG003"){
-      var realTypeHtml = new Array();
-      realTypeHtml.push("<option value='RT001'>아파트</option>");
-      realTypeHtml.push("<option value='RT002'>주택(단독주택, 다가구주택 등)</option>");
-      realTypeHtml.push("<option value='RT003'>상가(점포,사무실,오피스텔)</option>");
-      realTypeHtml.push("<option value='RT004'>농지</option>");
-      realTypeHtml.push("<option value='RT005'>농지외</option>");
-
-      $("#realType").html(realTypeHtml.join(""));
-      $("#moneySpan").text("채무금액");
-      $("#moneySpan").show();$("#money").show();$("#moneyText").show();
-
-      $("#bond_max_title").show();$("#bond_max_content").show();
-      //$("#tax_title").show();$("#tax_content").show();
-    }
-
-    // 증여등기
-    if(deungGi == "DG004"){
-      var realTypeHtml = new Array();
-      realTypeHtml.push("<option value='RT001'>아파트</option>");
-      realTypeHtml.push("<option value='RT002'>주택(단독주택, 다가구주택 등)</option>");
-      realTypeHtml.push("<option value='RT003'>상가(점포,사무실,오피스텔)</option>");
-      realTypeHtml.push("<option value='RT004'>농지</option>");
-      realTypeHtml.push("<option value='RT005'>농지외</option>");
-
-      $("#realType").html(realTypeHtml.join(""));
-
-      $("#del_cond_title").show();$("#del_cond_content").show();
-
-      $("#taxSpan").text("시가표준액(건물분)");
-      $("#tax_title").show();$("#tax_content").show();$("#taxText").show();
-      $("#tax_title2").show();$("#tax_content2").show();$("#tax2Text").show();
-      $("#area_title").show();$("#area_content").show();
-    }
-
-    // 상속등기
-    if(deungGi == "DG005"){
-      var realTypeHtml = new Array();
-      realTypeHtml.push("<option value='RT001'>아파트</option>");
-      realTypeHtml.push("<option value='RT002'>주택(단독주택, 다가구주택 등)</option>");
-      realTypeHtml.push("<option value='RT003'>상가(점포,사무실,오피스텔)</option>");
-      realTypeHtml.push("<option value='RT004'>농지</option>");
-      realTypeHtml.push("<option value='RT005'>농지외</option>");
-
-      $("#realType").html(realTypeHtml.join(""));
-      $("#del_cond_title").show();$("#del_cond_content").show();
-      $("#del_cond2_title").show();$("#del_cond2_content").show();
-
-      $("#tax_title").show();$("#tax_content").show();$("#taxText").show();
-      $("#tax_title2").show();$("#tax_content2").show();$("#tax2Text").show();
-      $("#area_title").show();$("#area_content").show();
-    }
-  }
 
   function changeRealType(){
     hideAll();
@@ -121,25 +94,47 @@
     if(realType == "RT001"){
         // 소유권이전
         if(deungGi == "DG001"){
-          $("#moneySpan").text("거래금액");
-          $("#moneySpan").show();$("#money").show();$("#moneyText").show();
-          $("#own_house_title").show();$("#own_house_content").show();
-          $("#del_cond_title").show();$("#del_cond_content").show();
-
-          $("#taxSpan").text("시가표준액");
-          $("#tax_title").show();$("#tax_content").show();$("#taxText").show();
-          $("#area_title").show();$("#area_content").show();
+            $("#moneySpan").text("거래금액");
+            // 거래금액
+            $("#li_1").show();
+            // 시가표준액
+            $("#li_2").show();
+            // 대상물건지역
+            $("#li_3").show();
+            // 감면조항
+            $("#li_4").show();
+            // 보유주택수
+            $("#li_5").show();
         }
         // 전세권설정
         else if(deungGi == "DG002"){
-          $("#moneySpan").text("전세보증금");
-          $("#moneySpan").show();$("#money").show();$("#moneyText").show();
+            $("#moneySpan").text("전세보증금");
+            // 거래금액
+            $("#li_1").show();
         }
         // 근저당권설정
         else if(deungGi == "DG003"){
-          $("#moneySpan").text("채무금액");
-          $("#moneySpan").show();$("#money").show();$("#moneyText").show();
-          $("#bond_max_title").show();$("#bond_max_content").show();
+            $("#moneySpan").text("채무금액");
+            // 거래금액
+            $("#li_1").show();
+
+
+
+
+
+
+
+
+
+
+
+
+
+          // TODO  20200413
+
+
+
+          //$("#bond_max_title").show();$("#bond_max_content").show();
           //$("#tax_title").show();$("#tax_content").show();
         }
         // 증여등기
@@ -354,29 +349,9 @@
   }
 
   function hideAll(){
-    // 거래금액
-    $("#moneySpan").hide();$("#money").hide();$("#moneyText").hide();
-    // 시가표준액
-    $("#tax_title").hide();$("#tax_content").hide();$("#taxText").hide();
-    // 시가표준액(토지분)
-    $("#tax_title2").hide();$("#tax_content2").hide();$("#tax2Text").hide();
-    // 대상물건지역
-    $("#area_title").hide();$("#area_content").hide();
-
-    // 감면조항 (전용면적 85제곱미터)
-    $("#del_cond_title").hide();$("#del_cond_content").hide();
-    // 무주택자감면
-    $("#del_cond2_title").hide();$("#del_cond2_content").hide();
-    // 감면조항 (농지원부)
-    $("#del_cond3_title").hide();$("#del_cond3_content").hide();
-    // 보유주택수
-    $("#own_house_title").hide();$("#own_house_content").hide();
-    // 채권최고액
-    $("#bond_max_title").hide();$("#bond_max_content").hide();
-    // 필지수
-    $("#square_title").hide();$("#square_content").hide();
-
-    $("#taxSpan").text("시가표준액");
+    for(var i=1; i <= 5; i++){
+        $("#li_" + i).hide();
+    }
   }
 
   function doCalculate(){
